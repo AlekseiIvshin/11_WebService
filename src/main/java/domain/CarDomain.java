@@ -1,4 +1,4 @@
-package domain.car;
+package domain;
 
 /**
  * Car domain implementation.
@@ -10,7 +10,7 @@ public class CarDomain {
 	/**
 	 * Car id.
 	 */
-	private final long id;
+	private long id;
 	
 	/**
 	 * Car mark name.
@@ -32,6 +32,10 @@ public class CarDomain {
 	 * @param id car id
 	 */
 	public CarDomain(final long id) {
+		this.id = id;
+	}
+	
+	public void setId(long id){
 		this.id = id;
 	}
 

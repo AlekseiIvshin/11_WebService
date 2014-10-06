@@ -1,6 +1,5 @@
-package domain.store;
+package domain;
 
-import domain.car.CarDomain;
 
 /**
  * Store domain implementation.

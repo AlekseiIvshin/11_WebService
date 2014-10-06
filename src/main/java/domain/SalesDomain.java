@@ -1,10 +1,6 @@
-package domain.sales;
+package domain;
 
 import java.util.Date;
-
-import domain.car.CarDomain;
-import domain.customer.CustomerDomain;
-import domain.merchant.MerchantDomain;
 
 /**
  * Sale Domain implementation.

@@ -17,11 +17,10 @@ import service.merchant.MerchantService;
 import service.merchant.MerchantServiceImpl;
 import service.sales.SalesService;
 import service.sales.SalesServiceImpl;
-import domain.car.CarDomain;
-import domain.customer.CustomerDomain;
-import domain.customer.CustomerDomain;
-import domain.merchant.MerchantDomain;
-import domain.sales.SalesDomain;
+import domain.CarDomain;
+import domain.CustomerDomain;
+import domain.MerchantDomain;
+import domain.SalesDomain;
 
 /**
  * Main.

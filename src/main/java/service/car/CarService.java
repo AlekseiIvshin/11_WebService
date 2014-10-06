@@ -3,7 +3,7 @@ package service.car;
 import java.sql.SQLException;
 
 import service.DomainService;
-import domain.car.CarDomain;
+import domain.CarDomain;
 
 /**
  * Car service interface.

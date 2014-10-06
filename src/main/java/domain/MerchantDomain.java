@@ -1,4 +1,4 @@
-package domain.merchant;
+package domain;
 
 /**
  * Merchant domain implementation.
@@ -11,7 +11,7 @@ public class MerchantDomain{
 	/**
 	 * Merchant id.
 	 */
-	private final int id;
+	private int id;
 	/**
 	 * Merchant name.
 	 */
@@ -37,6 +37,10 @@ public class MerchantDomain{
 
 	public int getId() {
 		return id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
 	}
 
 	public String getName() {

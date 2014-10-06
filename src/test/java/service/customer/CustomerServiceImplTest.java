@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import domain.customer.CustomerDomain;
+import domain.CustomerDomain;
 
 public class CustomerServiceImplTest {
 

@@ -69,7 +69,7 @@ public abstract class DomainServiceImpl<DomainClass, DomainId, Model, IdType,
 	@SuppressWarnings("unchecked")
 	public DomainServiceImpl() {
 		EntityManagerFactory entityManagerFactory = Persistence
-				.createEntityManagerFactory("07_JPA");
+				.createEntityManagerFactory("AutoShow");
 		entityManager = entityManagerFactory.createEntityManager();
 		this.domainType = (Class<DomainClass>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];

@@ -1,7 +1,7 @@
 package service.customer;
 
 import service.DomainService;
-import domain.customer.CustomerDomain;
+import domain.CustomerDomain;
 
 /**
  * Customer service interface.

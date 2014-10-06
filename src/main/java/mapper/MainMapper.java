@@ -14,11 +14,11 @@ import dao.customer.Customer;
 import dao.merchant.Merchant;
 import dao.sales.Sales;
 import dao.store.Store;
-import domain.car.CarDomain;
-import domain.customer.CustomerDomain;
-import domain.merchant.MerchantDomain;
-import domain.sales.SalesDomain;
-import domain.store.StoreDomain;
+import domain.CarDomain;
+import domain.CustomerDomain;
+import domain.MerchantDomain;
+import domain.SalesDomain;
+import domain.StoreDomain;
 
 /**
  * Main mapper for application.

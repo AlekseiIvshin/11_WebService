@@ -22,7 +22,7 @@ import dao.car.model.ModelDAOImpl;
 import dao.car.modification.Modification;
 import dao.car.modification.ModificationDAO;
 import dao.car.modification.ModificationDAOImpl;
-import domain.car.CarDomain;
+import domain.CarDomain;
 
 /**
  * Car service implementation.
@@ -41,17 +41,11 @@ public class CarServiceImpl
 	static final Logger LOG = LoggerFactory.getLogger(CarServiceImpl.class);
 
 	/**
-	 * Entity manager.
-	 */
-	private EntityManager entityManager;
-
-	/**
 	 * Default constructor.
 	 */
 	public CarServiceImpl() {
-		EntityManagerFactory emf = Persistence
-				.createEntityManagerFactory("07_JPA");
-		entityManager = emf.createEntityManager();
+		super();
+		dao = new ModificationDAOImpl(entityManager);
 	}
 
 	/**
@@ -73,6 +67,8 @@ public class CarServiceImpl
 		ModificationDAO modifDAO = new ModificationDAOImpl(entityManager);
 		entityManager.getTransaction().begin();
 		// find or create mark
+		
+		System.err.println(mark+" "+model+" "+modification);
 		Mark markData = markDAO.findOrCreate(mark);
 		Model modelData = modelDAO.findOrCreate(markData, model);
 		Modification modif = modifDAO.findOne(modelData, modification);
@@ -81,6 +77,9 @@ public class CarServiceImpl
 			throw new SQLException("This car (" + mark + " " + model + " "
 					+ modification + ") is exist!");
 		}
+		modif = new Modification();
+		modif.setModel(modelData);
+		modif.setName(modification);
 
 		modif = modifDAO.create(modif);
 

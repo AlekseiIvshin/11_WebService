@@ -9,8 +9,7 @@ import mapper.Mapper;
 import service.DomainServiceImpl;
 import dao.customer.Customer;
 import dao.customer.CustomerDAOImpl;
-import domain.customer.CustomerDomain;
-import domain.customer.CustomerDomain;
+import domain.CustomerDomain;
 
 /**
  * Customer service implementation.

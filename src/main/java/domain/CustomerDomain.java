@@ -1,4 +1,4 @@
-package domain.customer;
+package domain;
 
 import java.util.Date;
 
@@ -57,6 +57,10 @@ public class CustomerDomain{
 
 	public int getId() {
 		return id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
 	}
 
 	public String getName() {
