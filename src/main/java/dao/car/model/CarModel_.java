@@ -11,7 +11,7 @@ import dao.car.mark.Mark;
  *
  */
 @StaticMetamodel(CarModel.class)
-public class Model_ {
+public class CarModel_ {
 
 	public static SingularAttribute<CarModel, Integer> id;
 	public static SingularAttribute<CarModel, String> name;

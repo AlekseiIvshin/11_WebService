@@ -17,8 +17,12 @@
   <logger name="org.hibernate" level="error">
     <appender-ref ref="FILE" />
   </logger>
+   <logger name="ma.glasnost" level="error">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+  </logger>
  
-  <root level="info">
+  <root level="debug">
     <appender-ref ref="STDOUT" />
 	<appender-ref ref="FILE"/>
   </root>

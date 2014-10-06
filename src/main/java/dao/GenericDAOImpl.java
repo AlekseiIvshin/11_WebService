@@ -18,8 +18,7 @@ import org.slf4j.LoggerFactory;
  * @param <IdType>
  *            entity id
  */
-public class GenericDAOImpl<Model, IdType> 
-		implements GenericDAO<Model, IdType> {
+public class GenericDAOImpl<Model, IdType> implements GenericDAO<Model, IdType> {
 
 	/**
 	 * Entity manager.
@@ -103,8 +102,14 @@ public class GenericDAOImpl<Model, IdType>
 	 *            id of entity
 	 */
 	public final void deleteById(final IdType id) {
-		Model m = find(id);
-		entityManager.remove(m);
+		entityManager.getTransaction().begin();
+		try {
+			Model m = find(id);
+			entityManager.remove(m);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+		}
 	}
 
 	/**

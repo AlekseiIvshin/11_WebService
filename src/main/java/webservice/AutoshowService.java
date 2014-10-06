@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.persistence.NoResultException;
 
 import service.car.CarServiceImpl;
 import service.customer.CustomerServiceImpl;
@@ -50,7 +51,7 @@ public class AutoshowService {
 	@WebMethod
 	public void removeCar(@WebParam(name = "markName") String mark,
 			@WebParam(name = "modelName") String model,
-			@WebParam(name = "modificationName") String modification) {
+			@WebParam(name = "modificationName") String modification) throws NoResultException {
 		carService.removeCar(mark, model, modification);
 	}
 

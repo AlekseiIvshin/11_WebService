@@ -52,8 +52,8 @@ public class ModelDAOImpl extends GenericDAOImpl<CarModel, Integer> implements
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<CarModel> query = builder.createQuery(CarModel.class);
 		Root<CarModel> root = query.from(CarModel.class);
-		query.where(builder.like(root.get(Model_.name), name))
-				.where(builder.equal(root.get(Model_.mark), mark)).select(root);
+		query.where(builder.like(root.get(CarModel_.name), name))
+				.where(builder.equal(root.get(CarModel_.mark), mark)).select(root);
 		TypedQuery<CarModel> ctq = entityManager.createQuery(query);
 		return ctq.getResultList();
 	}
@@ -72,8 +72,8 @@ public class ModelDAOImpl extends GenericDAOImpl<CarModel, Integer> implements
 		CriteriaQuery<CarModel> query = builder.createQuery(CarModel.class);
 		Root<CarModel> root = query.from(CarModel.class);
 		query.where(
-				builder.and(builder.equal(root.get(Model_.mark), mark),
-						builder.equal(root.get(Model_.name), name))).select(
+				builder.and(builder.equal(root.get(CarModel_.mark), mark),
+						builder.equal(root.get(CarModel_.name), name))).select(
 				root);
 		TypedQuery<CarModel> ctq = entityManager.createQuery(query);
 		try {

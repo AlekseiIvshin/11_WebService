@@ -64,7 +64,6 @@ public class CarServiceImpl
 		entityManager.getTransaction().begin();
 		// find or create mark
 		
-		System.err.println(mark+" "+model+" "+modification);
 		Mark markData = markDAO.findOrCreate(mark);
 		CarModel modelData = modelDAO.findOrCreate(markData, model);
 		Modification modif = modifDAO.findOne(modelData, modification);
@@ -95,17 +94,19 @@ public class CarServiceImpl
 	 *            car modification
 	 */
 	public final void removeCar(final String mark, final String model,
-			final String modification) {
+			final String modification) throws NoResultException {
 		// search mark by name
 		MarkDAO markDAO = new MarkDAOImpl(entityManager);
 		Mark markEntity = markDAO.findOne(mark);
 		if (markEntity == null) {
+			LOG.debug("Mark {} not exist",mark);
 			throw new NoResultException("No found mark with name " + mark);
 		}
 
 		ModelDAO modelDAO = new ModelDAOImpl(entityManager);
 		CarModel modelEntity = modelDAO.findOne(markEntity, model);
 		if (modelEntity == null) {
+			LOG.debug("Model {} {} not exist",mark, model);
 			throw new NoResultException("No found mark with name " + mark
 					+ " and model name " + model);
 		}
@@ -115,6 +116,7 @@ public class CarServiceImpl
 				modification);
 
 		if (modifEntity == null) {
+			LOG.debug("Modification {} {} {} not exist",mark,model, modification);
 			throw new NoResultException("No found mark with name " + mark
 					+ ", model name " + model + " and modification "
 					+ modification);
