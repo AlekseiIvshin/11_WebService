@@ -13,7 +13,7 @@ public class CarServiceImplTest {
 		CarServiceImpl carservice  = new CarServiceImpl();
 		try {
 			carservice.addCar("Mersedes", "Benz", "620 ls");
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			fail(e.getMessage());
 		}
 	}

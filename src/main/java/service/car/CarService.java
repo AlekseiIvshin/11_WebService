@@ -20,16 +20,18 @@ public interface CarService extends DomainService<CarDomain, Long> {
 	 * @param modification car modification
 	 * @return created car
 	 * @throws SQLException 
+	 * @throws Exception 
 	 */
-	CarDomain addCar(String mark, String model, String modification) throws SQLException;
+	CarDomain addCar(String mark, String model, String modification) throws  Exception;
 
 	/**
 	 * Remove car.
 	 * @param mark mark name
 	 * @param model model name
 	 * @param modification car modification
+	 * @throws Exception 
 	 */
-	void removeCar(String mark, String model, String modification);
+	void removeCar(String mark, String model, String modification) throws Exception;
 
 	/**
 	 * Find car by name.

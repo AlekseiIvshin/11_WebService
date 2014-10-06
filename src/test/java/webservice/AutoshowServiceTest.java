@@ -2,7 +2,6 @@ package webservice;
 
 import static org.junit.Assert.*;
 
-import java.sql.SQLException;
 import java.util.Random;
 
 import javax.persistence.NoResultException;
@@ -13,8 +12,6 @@ import org.junit.Test;
 
 import domain.CarDomain;
 import domain.CustomerDomain;
-import domain.SalesDomain;
-import domain.StoreDomain;
 
 public class AutoshowServiceTest {
 
@@ -50,7 +47,7 @@ public class AutoshowServiceTest {
 		CarDomain newCar = null;
 		try {
 			newCar = service.addCar(carMark, carModel, carModification);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			fail(e.getMessage());
 		}
 		assertNotNull(newCar);
@@ -71,7 +68,7 @@ public class AutoshowServiceTest {
 		CarDomain newCar = null;
 		try {
 			newCar = service.addCar(carMark, carModel, carModification);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			fail(e.getMessage());
 		}
 		assertNotNull(newCar);
@@ -80,7 +77,7 @@ public class AutoshowServiceTest {
 		assertEquals(newCar.getModification(), carModification);
 		try {
 			service.removeCar(carMark, carModel, carModification);
-		} catch (NoResultException e) {
+		} catch (Exception e) {
 			fail(e.getMessage());
 		}
 		try {
