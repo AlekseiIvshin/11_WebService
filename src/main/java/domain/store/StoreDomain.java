@@ -3,92 +3,80 @@ package domain.store;
 import domain.car.CarDomain;
 
 /**
- * Store domain interface.
- * 
+ * Store domain implementation.
  * @author Aleksei_Ivshin
  *
  */
-public interface StoreDomain {
+public class StoreDomain{
 
 	/**
-	 * Get id.
-	 * 
-	 * @return store item id
+	 * Store item id.
 	 */
-	int getId();
+	private int id;
 
 	/**
-	 * Set id.
-	 * 
-	 * @param id
-	 *            id
+	 * Car in store.
 	 */
-	void setId(int id);
-
+	private CarDomain car;
 	/**
-	 * Get car from store.
-	 * 
-	 * @return car
+	 * Car quantity.
 	 */
-	CarDomain getCar();
-
+	private int quantity;
 	/**
-	 * Set car to store.
-	 * 
-	 * @param car
-	 *            car
+	 * Current car price.
 	 */
-	void setCar(CarDomain car);
-
+	private float price;
 	/**
-	 * Get car quantity in store.
-	 * 
-	 * @return car quantity
+	 * Car enable to test drive.
 	 */
-	int getQuantity();
+	private boolean canTestDrive;
 
-	/**
-	 * Set car quantity to store.
-	 * 
-	 * @param quantity
-	 *            quantity
-	 */
-	void setQuantity(int quantity);
+	public boolean canSale() {
+		return quantity > 0;
+	}
 
-	/**
-	 * Get car price.
-	 * 
-	 * @return price
-	 */
-	float getPrice();
+	public int getId() {
+		return id;
+	}
 
-	/**
-	 * Set car price.
-	 * 
-	 * @param price
-	 *            price
-	 */
-	void setPrice(float price);
+	public void setId(int id) {
+		this.id = id;
+	}
 
-	/**
-	 * Get car enable for test drive.
-	 * 
-	 * @return can test drive car
-	 */
-	boolean getEnableTestDrive();
+	public CarDomain getCar() {
+		return car;
+	}
 
-	/**
-	 * Set car enable for test drive.
-	 * 
-	 * @param canTestDrive
-	 *            can test drive
-	 */
-	void setEnableTestDrive(boolean canTestDrive);
+	public void setCar(CarDomain car) {
+		this.car = car;
+	}
 
-	/**
-	 * Enable for sale.
-	 * 
-	 * @return store is enable for sale
-	 */
-	boolean canSale();
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public boolean getEnableTestDrive() {
+		return canTestDrive;
+	}
+
+	public void setEnableTestDrive(boolean canTestDrive) {
+		this.canTestDrive = canTestDrive;
+	}
+
+	public boolean canTestDrive() {
+		return canTestDrive;
+	}
+
 }

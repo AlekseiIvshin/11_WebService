@@ -3,107 +3,114 @@ package domain.customer;
 import java.util.Date;
 
 /**
- * Customer domain interface.
+ * Customer domain implementation.
  * 
  * @author Aleksei_Ivshin
  *
  */
-public interface CustomerDomain {
+public class CustomerDomain{
 
 	/**
-	 * Get customer id.
-	 * 
-	 * @return id
+	 * Customer id.
 	 */
-	int getId();
+	private int id;
+	/**
+	 * Customer name.
+	 */
+	private String name;
+	/**
+	 * Customer surname.
+	 */
+	private String surname;
+	/**
+	 * Customer patronymic.
+	 */
+	private String patronymic;
+	/**
+	 * Customer passport number.
+	 */
+	private String passportNumber;
+	/**
+	 * Customer passport series.
+	 */
+	private String passportSeries;
+	/**
+	 * Customer birth date.
+	 */
+	private Date birthDate;
 
 	/**
-	 * Get customer name.
-	 * 
-	 * @return name
+	 * Default constructor.
 	 */
-	String getName();
+	public CustomerDomain() {
+	};
 
 	/**
-	 * Set customer name.
+	 * Constructor with id parameter.
 	 * 
-	 * @param name
-	 *            name
+	 * @param id
+	 *            customer id
 	 */
-	void setName(String name);
+	public CustomerDomain(int id) {
+		this.id = id;
+	}
 
-	/**
-	 * Get customer surname.
-	 * 
-	 * @return surname
-	 */
-	String getSurname();
+	public int getId() {
+		return id;
+	}
 
-	/**
-	 * Set customer surname.
-	 * 
-	 * @param surname
-	 *            surname
-	 */
-	void setSurname(String surname);
+	public String getName() {
+		return name;
+	}
 
-	/**
-	 * Get customer patronymic.
-	 * 
-	 * @return patronymic
-	 */
-	String getPatronymic();
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	/**
-	 * Set customer patronymic.
-	 * 
-	 * @param patronymic
-	 *            patronymic
-	 */
-	void setPatronymic(String patronymic);
+	public String getSurname() {
+		return surname;
+	}
 
-	/**
-	 * Get customer passport number.
-	 * 
-	 * @return passport number
-	 */
-	String getPassportNumber();
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 
-	/**
-	 * Set customer passport number.
-	 * 
-	 * @param passportNumber
-	 *            passport number
-	 */
-	void setPassportNumber(String passportNumber);
+	public String getPatronymic() {
+		return patronymic;
+	}
 
-	/**
-	 * Get customer passport series.
-	 * 
-	 * @return passport series
-	 */
-	String getPassportSeries();
+	public void setPatronymic(String patronymic) {
+		this.patronymic = patronymic;
+	}
 
-	/**
-	 * Set customer passport series.
-	 * 
-	 * @param passportSeries
-	 *            passport series
-	 */
-	void setPassportSeries(String passportSeries);
+	public String getPassportNumber() {
+		return passportNumber;
+	}
 
-	/**
-	 * Get customer birth date.
-	 * 
-	 * @return birth date
-	 */
-	Date getBirthDate();
+	public void setPassportNumber(String passportNumber) {
+		this.passportNumber = passportNumber;
+	}
 
-	/**
-	 * Set customer birth date.
-	 * 
-	 * @param birthDate
-	 *            birth date
-	 */
-	void setBirthDate(Date birthDate);
+	public String getPassportSeries() {
+		return passportSeries;
+	}
+
+	public void setPassportSeries(String passportSeries) {
+		this.passportSeries = passportSeries;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	@Override
+	public final String toString() {
+		return "CustomerDomain [id=" + id + ", surname=" + surname + ", name="
+				+ name + ", patronymic=" + patronymic + ", passport="
+				+ passportSeries + " " + passportNumber + "]";
+	}
 }

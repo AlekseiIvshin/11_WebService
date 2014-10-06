@@ -19,7 +19,7 @@ import service.sales.SalesService;
 import service.sales.SalesServiceImpl;
 import domain.car.CarDomain;
 import domain.customer.CustomerDomain;
-import domain.customer.CustomerDomainImpl;
+import domain.customer.CustomerDomain;
 import domain.merchant.MerchantDomain;
 import domain.sales.SalesDomain;
 
@@ -124,7 +124,7 @@ public class App {
 			customer = getAnyCustomer();
 		} catch (NoResultException e) {
 			LOG.error(e.toString());
-			customer = new CustomerDomainImpl();
+			customer = new CustomerDomain();
 			customer.setName("Name");
 			customer.setSurname("SurName");
 			customer.setPatronymic("Patronymic");

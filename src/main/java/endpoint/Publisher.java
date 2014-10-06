@@ -2,11 +2,11 @@ package endpoint;
 
 import javax.xml.ws.Endpoint;
 
-import service.customer.CustomerServiceImpl;
+import webservice.AutoshowService;
 
 public class Publisher {
 
 	public static void main(String[] args){
-		Endpoint.publish("http://localhost:8888/ws/customer", new CustomerServiceImpl());
+		Endpoint.publish("http://localhost:8889/ws/autoshow", new AutoshowService());
 	}
 }

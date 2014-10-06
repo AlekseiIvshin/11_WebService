@@ -10,7 +10,7 @@ import service.DomainServiceImpl;
 import dao.customer.Customer;
 import dao.customer.CustomerDAOImpl;
 import domain.customer.CustomerDomain;
-import domain.customer.CustomerDomainImpl;
+import domain.customer.CustomerDomain;
 
 /**
  * Customer service implementation.
@@ -47,10 +47,10 @@ public class CustomerServiceImpl
 	}
 
 	@WebMethod
-	public CustomerDomainImpl findByPassport(
+	public CustomerDomain findByPassport(
 			@WebParam(name = "series") String series,
 			@WebParam(name = "number") String number) {
-		return (CustomerDomainImpl) mapper.map(
+		return (CustomerDomain) mapper.map(
 				dao.findByPassport(series, number), CustomerDomain.class);
 	}
 

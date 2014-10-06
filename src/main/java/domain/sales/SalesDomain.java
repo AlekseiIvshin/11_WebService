@@ -7,100 +7,84 @@ import domain.customer.CustomerDomain;
 import domain.merchant.MerchantDomain;
 
 /**
- * Sales domain interface.
+ * Sale Domain implementation.
  * 
  * @author Aleksei_Ivshin
  *
  */
-public interface SalesDomain {
+public class SalesDomain{
 
 	/**
-	 * Get sales id.
-	 * 
-	 * @return sales id
+	 * Sale id.
 	 */
-	int getId();
-
+	private int id;
 	/**
-	 * Set sales id.
-	 * 
-	 * @param id
-	 *            id
+	 * Car sold.
 	 */
-	void setId(int id);
-
+	private CarDomain car;
 	/**
-	 * Get sales car.
-	 * 
-	 * @return car
+	 * Merchant, who sale car.
 	 */
-	CarDomain getCar();
-
+	private MerchantDomain merchant;
 	/**
-	 * Set sales car.
-	 * 
-	 * @param car
-	 *            car
+	 * Customer, who buy car.
 	 */
-	void setCar(CarDomain car);
-
+	private CustomerDomain customer;
 	/**
-	 * Get sales merchant.
-	 * 
-	 * @return merchant
+	 * Car price.
 	 */
-	MerchantDomain getMerchant();
-
+	private float price;
 	/**
-	 * Set sales merchant.
-	 * 
-	 * @param merchant
-	 *            merchant
+	 * Date of sale.
 	 */
-	void setMerchant(MerchantDomain merchant);
+	private Date saleDate;
 
-	/**
-	 * Get sales customer.
-	 * 
-	 * @return customer
-	 */
-	CustomerDomain getCustomer();
+	public int getId() {
+		return id;
+	}
 
-	/**
-	 * Set sale customer.
-	 * 
-	 * @param customer
-	 *            customer
-	 */
-	void setCustomer(CustomerDomain customer);
+	public void setId(int id) {
+		this.id = id;
+	}
 
-	/**
-	 * Get sale price.
-	 * 
-	 * @return price
-	 */
-	float getPrice();
+	public CarDomain getCar() {
+		return car;
+	}
 
-	/**
-	 * Set sale price.
-	 * 
-	 * @param price
-	 *            price
-	 */
-	void setPrice(float price);
+	public void setCar(CarDomain car) {
+		this.car = car;
+	}
 
-	/**
-	 * Get sale date.
-	 * 
-	 * @return sale date
-	 */
-	Date getSaleDate();
+	public MerchantDomain getMerchant() {
+		return merchant;
+	}
 
-	/**
-	 * Set sale date.
-	 * 
-	 * @param saleDate
-	 *            sale date
-	 */
-	void setSaleDate(Date saleDate);
+	public void setMerchant(MerchantDomain merchant) {
+		this.merchant = merchant;
+	}
+
+	public CustomerDomain getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(CustomerDomain customer) {
+		this.customer = customer;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public Date getSaleDate() {
+		return saleDate;
+	}
+
+	public void setSaleDate(Date saleDate) {
+		this.saleDate = saleDate;
+	}
+
 }

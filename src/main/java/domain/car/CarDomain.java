@@ -1,53 +1,72 @@
 package domain.car;
 
 /**
- * Car interface.
- * @author AlekseiIvshin
+ * Car domain implementation.
+ * @author Aleksei_Ivshin
  *
  */
-public interface CarDomain {
+public class CarDomain {
 
+	/**
+	 * Car id.
+	 */
+	private final long id;
 	
 	/**
-	 * Get id car.
-	 * @return id 
+	 * Car mark name.
 	 */
-	long getId();
-	
-	/** 
-	 * Get car mark.
- 	 * @return mark
-	 */
-	String getMark();
+	private String mark;
 	
 	/**
-	 * Set car mark.
-	 * @param mark mark
+	 * Car model name.
 	 */
-	void setMark(String mark);
+	private String model;
 	
 	/**
-	 * Get car model.
-	 * @return model
+	 * Car modification.
 	 */
-	String getModel();
-	
+	private String modification;
+
 	/**
-	 * Set car model.
-	 * @param model model
+	 * Constructor with set car id.
+	 * @param id car id
 	 */
-	void setModel(String model);
-	
-	/**
-	 * Get car modification.
-	 * @return modification
-	 */
-	String getModification();
-	
-	/**
-	 * Set modification.
-	 * @param modification modification
-	 */
-	void setModification(String modification);
-	
+	public CarDomain(final long id) {
+		this.id = id;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public String getMark() {
+		return mark;
+	}
+
+	public void setMark(String mark) {
+		this.mark = mark;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public String getModification() {
+		return modification;
+	}
+
+	public void setModification(String modification) {
+		this.modification = modification;
+	}
+
+	@Override
+	public final String toString() {
+		return "Car [id=" + id + ", mark=" + mark + ", model=" + model
+				+ ", modification=" + modification + "]";
+	}
+
 }
