@@ -1,11 +1,16 @@
 package service.customer;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
 import mapper.MainMapper;
 import mapper.Mapper;
 import service.DomainServiceImpl;
 import dao.customer.Customer;
 import dao.customer.CustomerDAOImpl;
 import domain.customer.CustomerDomain;
+import domain.customer.CustomerDomainImpl;
 
 /**
  * Customer service implementation.
@@ -13,10 +18,10 @@ import domain.customer.CustomerDomain;
  * @author Aleksei_Ivshin
  *
  */
+@WebService
 public class CustomerServiceImpl
 		extends
-		DomainServiceImpl
-		<CustomerDomain, Integer, Customer, Integer, CustomerDAOImpl>
+		DomainServiceImpl<CustomerDomain, Integer, Customer, Integer, CustomerDAOImpl>
 		implements CustomerService {
 
 	/**
@@ -39,6 +44,14 @@ public class CustomerServiceImpl
 		Customer customerDao = mapper.map(customer, Customer.class);
 		return mapper
 				.map(dao.findByPassport(customerDao), CustomerDomain.class);
+	}
+
+	@WebMethod
+	public CustomerDomainImpl findByPassport(
+			@WebParam(name = "series") String series,
+			@WebParam(name = "number") String number) {
+		return (CustomerDomainImpl) mapper.map(
+				dao.findByPassport(series, number), CustomerDomain.class);
 	}
 
 }

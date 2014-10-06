@@ -54,5 +54,19 @@ public class CustomerDAOImpl extends GenericDAOImpl<Customer, Integer>
 		TypedQuery<Customer> ctq = entityManager.createQuery(query);
 		return ctq.getSingleResult();
 	}
+	
+	public final Customer findByPassport(final String series, final String number) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
+		Root<Customer> resultCustomer = query.from(Customer.class);
+		query.where(
+				builder.equal(resultCustomer.get(Customer_.passportSeries),
+						series))
+				.where(builder.equal(
+						resultCustomer.get(Customer_.passportNumber),
+						number)).select(resultCustomer);
+		TypedQuery<Customer> ctq = entityManager.createQuery(query);
+		return ctq.getSingleResult();
+	}
 
 }
