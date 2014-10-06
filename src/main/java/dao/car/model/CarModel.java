@@ -23,7 +23,7 @@ import dao.car.mark.Mark;
 @Table(name = "car_model", 
 	uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"name", "id_car_mark" }) })
-public class Model {
+public class CarModel {
 
 	/**
 	 * Car model id.
@@ -49,7 +49,7 @@ public class Model {
 	/**
 	 * Default constructor.
 	 */
-	public Model() {
+	public CarModel() {
 	}
 
 	/**

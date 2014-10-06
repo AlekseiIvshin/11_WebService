@@ -2,11 +2,7 @@ package service.car;
 
 import java.sql.SQLException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +12,7 @@ import mapper.Mapper;
 import dao.car.mark.Mark;
 import dao.car.mark.MarkDAO;
 import dao.car.mark.MarkDAOImpl;
-import dao.car.model.Model;
+import dao.car.model.CarModel;
 import dao.car.model.ModelDAO;
 import dao.car.model.ModelDAOImpl;
 import dao.car.modification.Modification;
@@ -70,7 +66,7 @@ public class CarServiceImpl
 		
 		System.err.println(mark+" "+model+" "+modification);
 		Mark markData = markDAO.findOrCreate(mark);
-		Model modelData = modelDAO.findOrCreate(markData, model);
+		CarModel modelData = modelDAO.findOrCreate(markData, model);
 		Modification modif = modifDAO.findOne(modelData, modification);
 		if (modif != null) {
 			entityManager.getTransaction().rollback();
@@ -108,7 +104,7 @@ public class CarServiceImpl
 		}
 
 		ModelDAO modelDAO = new ModelDAOImpl(entityManager);
-		Model modelEntity = modelDAO.findOne(markEntity, model);
+		CarModel modelEntity = modelDAO.findOne(markEntity, model);
 		if (modelEntity == null) {
 			throw new NoResultException("No found mark with name " + mark
 					+ " and model name " + model);
@@ -148,7 +144,7 @@ public class CarServiceImpl
 		}
 
 		ModelDAO modelDAO = new ModelDAOImpl(entityManager);
-		Model modelEntity = modelDAO.findOne(markEntity, model);
+		CarModel modelEntity = modelDAO.findOne(markEntity, model);
 		if (modelEntity == null) {
 			throw new NoResultException("Model with name " + model
 					+ " and mark " + mark + " not founded");

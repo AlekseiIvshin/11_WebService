@@ -3,7 +3,7 @@ package dao.car.modification;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import dao.car.model.Model;
+import dao.car.model.CarModel;
 
 /**
  * Entity model of car modification.
@@ -25,5 +25,5 @@ public class Modification_ {
 	/**
 	 * Modification model.
 	 */
-	public static SingularAttribute<Modification, Model> model;
+	public static SingularAttribute<Modification, CarModel> model;
 }

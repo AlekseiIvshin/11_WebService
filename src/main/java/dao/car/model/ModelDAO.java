@@ -11,7 +11,7 @@ import dao.car.mark.Mark;
  * @author Aleksei_Ivshin
  *
  */
-public interface ModelDAO extends GenericDAO<Model, Integer> {
+public interface ModelDAO extends GenericDAO<CarModel, Integer> {
 
 	/**
 	 * Find models with name like parameter.
@@ -22,7 +22,7 @@ public interface ModelDAO extends GenericDAO<Model, Integer> {
 	 *            part or full car model name
 	 * @return founded models
 	 */
-	List<Model> findAny(Mark mark, String name);
+	List<CarModel> findAny(Mark mark, String name);
 
 	/**
 	 * Find model with name equal parameter.
@@ -33,7 +33,7 @@ public interface ModelDAO extends GenericDAO<Model, Integer> {
 	 *            full model name
 	 * @return founded model or null (if not found)
 	 */
-	Model findOne(Mark mark, String name);
+	CarModel findOne(Mark mark, String name);
 	
 	/**
 	 * Find car model. If not founded create this model
@@ -44,5 +44,5 @@ public interface ModelDAO extends GenericDAO<Model, Integer> {
 	 *            model name
 	 * @return founded or created model
 	 */
-	Model findOrCreate(Mark mark, String name);
+	CarModel findOrCreate(Mark mark, String name);
 }

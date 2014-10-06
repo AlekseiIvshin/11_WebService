@@ -21,7 +21,7 @@ import dao.car.mark.Mark;
  * @author Aleksei_Ivshin
  *
  */
-public class ModelDAOImpl extends GenericDAOImpl<Model, Integer> implements
+public class ModelDAOImpl extends GenericDAOImpl<CarModel, Integer> implements
 		ModelDAO {
 
 	/**
@@ -48,13 +48,13 @@ public class ModelDAOImpl extends GenericDAOImpl<Model, Integer> implements
 	 *            part or full car model name
 	 * @return founded models
 	 */
-	public final List<Model> findAny(final Mark mark, final String name) {
+	public final List<CarModel> findAny(final Mark mark, final String name) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Model> query = builder.createQuery(Model.class);
-		Root<Model> root = query.from(Model.class);
+		CriteriaQuery<CarModel> query = builder.createQuery(CarModel.class);
+		Root<CarModel> root = query.from(CarModel.class);
 		query.where(builder.like(root.get(Model_.name), name))
 				.where(builder.equal(root.get(Model_.mark), mark)).select(root);
-		TypedQuery<Model> ctq = entityManager.createQuery(query);
+		TypedQuery<CarModel> ctq = entityManager.createQuery(query);
 		return ctq.getResultList();
 	}
 
@@ -67,15 +67,15 @@ public class ModelDAOImpl extends GenericDAOImpl<Model, Integer> implements
 	 *            full model name
 	 * @return founded model or null (if not found)
 	 */
-	public final Model findOne(final Mark mark, final String name) {
+	public final CarModel findOne(final Mark mark, final String name) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Model> query = builder.createQuery(Model.class);
-		Root<Model> root = query.from(Model.class);
+		CriteriaQuery<CarModel> query = builder.createQuery(CarModel.class);
+		Root<CarModel> root = query.from(CarModel.class);
 		query.where(
 				builder.and(builder.equal(root.get(Model_.mark), mark),
 						builder.equal(root.get(Model_.name), name))).select(
 				root);
-		TypedQuery<Model> ctq = entityManager.createQuery(query);
+		TypedQuery<CarModel> ctq = entityManager.createQuery(query);
 		try {
 			return ctq.getSingleResult();
 		} catch (NoResultException e) {
@@ -92,10 +92,10 @@ public class ModelDAOImpl extends GenericDAOImpl<Model, Integer> implements
 	 *            model name
 	 * @return founded or created model
 	 */
-	public final Model findOrCreate(final Mark mark, final String name) {
-		Model modelData = findOne(mark, name);
+	public final CarModel findOrCreate(final Mark mark, final String name) {
+		CarModel modelData = findOne(mark, name);
 		if (modelData == null) {
-			modelData = new Model();
+			modelData = new CarModel();
 			modelData.setMark(mark);
 			modelData.setName(name);
 			modelData = create(modelData);

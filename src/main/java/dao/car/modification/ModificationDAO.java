@@ -3,7 +3,7 @@ package dao.car.modification;
 import java.util.List;
 
 import dao.GenericDAO;
-import dao.car.model.Model;
+import dao.car.model.CarModel;
 
 /**
  * Modification DAO interface.
@@ -20,7 +20,7 @@ public interface ModificationDAO extends GenericDAO<Modification, Long> {
 	 *            part or full car modification name
 	 * @return founded modifications
 	 */
-	List<Modification> findAny(Model model, String name);
+	List<Modification> findAny(CarModel model, String name);
 	
 	/**
 	 * Find modification with name equal parameter.
@@ -31,6 +31,6 @@ public interface ModificationDAO extends GenericDAO<Modification, Long> {
 	 *            full modification name
 	 * @return founded modification or null (if not found)
 	 */
-	Modification findOne(Model model, String name);
+	Modification findOne(CarModel model, String name);
 	
 }

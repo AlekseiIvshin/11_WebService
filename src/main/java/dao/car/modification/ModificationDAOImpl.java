@@ -10,7 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import dao.GenericDAOImpl;
-import dao.car.model.Model;
+import dao.car.model.CarModel;
 
 /**
  * Modification DAO implementation.
@@ -40,7 +40,7 @@ public class ModificationDAOImpl extends GenericDAOImpl<Modification, Long>
 	 *            part or full car modification name
 	 * @return founded modifications
 	 */
-	public final List<Modification> findAny(final Model model, final String name) {
+	public final List<Modification> findAny(final CarModel model, final String name) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Modification> query = builder
 				.createQuery(Modification.class);
@@ -61,7 +61,7 @@ public class ModificationDAOImpl extends GenericDAOImpl<Modification, Long>
 	 *            full modification name
 	 * @return founded modification or null (if not found)
 	 */
-	public final Modification findOne(final Model model, final String name) {
+	public final Modification findOne(final CarModel model, final String name) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Modification> query = builder
 				.createQuery(Modification.class);

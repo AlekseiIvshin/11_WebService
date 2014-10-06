@@ -10,10 +10,10 @@ import dao.car.mark.Mark;
  * @author Aleksei_Ivshin
  *
  */
-@StaticMetamodel(Model.class)
+@StaticMetamodel(CarModel.class)
 public class Model_ {
 
-	public static SingularAttribute<Model, Integer> id;
-	public static SingularAttribute<Model, String> name;
-	public static SingularAttribute<Model, Mark> mark;
+	public static SingularAttribute<CarModel, Integer> id;
+	public static SingularAttribute<CarModel, String> name;
+	public static SingularAttribute<CarModel, Mark> mark;
 }
