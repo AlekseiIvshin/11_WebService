@@ -2,6 +2,7 @@ package dao.store;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ import dao.car.modification.Modification;
  */
 @Entity
 @Table(name = "store")
+@Cacheable(value=false)
 public class Store {
 
 	/**
@@ -53,7 +55,7 @@ public class Store {
 	/**
 	 * Car.
 	 */
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "id_car_modification")
 	private Modification modification;
 

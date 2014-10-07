@@ -5,9 +5,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import service.DomainServiceImpl;
 import dao.GenericDAOImpl;
 import dao.car.modification.Modification;
 import dao.customer.Customer;
+import dao.customer.CustomerDAOImpl;
 import dao.merchant.Merchant;
 import dao.store.Store;
 import dao.store.StoreDAOImpl;
@@ -21,6 +26,9 @@ import dao.store.StoreDAOImpl;
 public class SalesDAOImpl extends GenericDAOImpl<Sales, Integer> implements
 		SalesDAO {
 
+	
+
+	static final Logger logger = LoggerFactory.getLogger(SalesDAOImpl.class);
 	/**
 	 * Constructor.
 	 * 
@@ -104,9 +112,11 @@ public class SalesDAOImpl extends GenericDAOImpl<Sales, Integer> implements
 			entityManager.persist(sales);
 			store.setCount(store.getCount() - 1);
 			entityManager.merge(store);
+			entityManager.getTransaction().commit();
 			return sales;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
+			logger.error("Store can't update",e);
 			throw new IllegalArgumentException("Store can't update: "
 					+ e.getMessage());
 		}

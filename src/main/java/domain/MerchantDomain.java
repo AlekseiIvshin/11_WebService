@@ -34,6 +34,8 @@ public class MerchantDomain{
 	public MerchantDomain(final int id) {
 		this.id = id;
 	}
+	
+	public MerchantDomain(){};
 
 	public int getId() {
 		return id;

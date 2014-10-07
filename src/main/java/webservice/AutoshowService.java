@@ -5,6 +5,7 @@ import java.util.List;
 import javax.jws.WebService;
 
 import service.car.CarServiceImpl;
+import service.customer.CustomerService;
 import service.customer.CustomerServiceImpl;
 import service.merchant.MerchantServiceImpl;
 import service.sales.SalesServiceImpl;
@@ -18,7 +19,7 @@ import domain.StoreDomain;
 @WebService(endpointInterface = "webservice.ShowService")
 public class AutoshowService implements ShowService {
 
-	private CustomerServiceImpl customerService = new CustomerServiceImpl();
+	private CustomerService customerService = new CustomerServiceImpl();
 	private CarServiceImpl carService = new CarServiceImpl();
 	private MerchantServiceImpl merchantService = new MerchantServiceImpl();
 	private SalesServiceImpl salesService = new SalesServiceImpl();
@@ -37,7 +38,6 @@ public class AutoshowService implements ShowService {
 	@Override
 	public CarDomain addCar(String mark, String model, String modification)
 			throws Exception {
-		System.err.println(mark + " " + model + " " + modification);
 		return carService.addCar(mark, model, modification);
 	}
 

@@ -20,4 +20,6 @@ public interface CustomerService
 	 * @return founded customer
 	 */
 	CustomerDomain findByPassport(CustomerDomain customer);
+
+	CustomerDomain findByPassport(String series, String number);
 }
