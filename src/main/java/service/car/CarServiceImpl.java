@@ -1,11 +1,9 @@
 package service.car;
 
 import java.sql.SQLException;
+import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +14,13 @@ import mapper.Mapper;
 import dao.car.mark.Mark;
 import dao.car.mark.MarkDAO;
 import dao.car.mark.MarkDAOImpl;
-import dao.car.model.Model;
+import dao.car.model.CarModel;
 import dao.car.model.ModelDAO;
 import dao.car.model.ModelDAOImpl;
 import dao.car.modification.Modification;
 import dao.car.modification.ModificationDAO;
 import dao.car.modification.ModificationDAOImpl;
-import domain.car.CarDomain;
+import domain.CarDomain;
 
 /**
  * Car service implementation.
@@ -41,17 +39,11 @@ public class CarServiceImpl
 	static final Logger LOG = LoggerFactory.getLogger(CarServiceImpl.class);
 
 	/**
-	 * Entity manager.
-	 */
-	private EntityManager entityManager;
-
-	/**
 	 * Default constructor.
 	 */
 	public CarServiceImpl() {
-		EntityManagerFactory emf = Persistence
-				.createEntityManagerFactory("07_JPA");
-		entityManager = emf.createEntityManager();
+		super();
+		dao = new ModificationDAOImpl(entityManager);
 	}
 
 	/**
@@ -67,20 +59,24 @@ public class CarServiceImpl
 	 * @throws SQLException some exception
 	 */
 	public final CarDomain addCar(final String mark, final String model,
-			final String modification) throws SQLException {
+			final String modification) throws Exception {
 		MarkDAO markDAO = new MarkDAOImpl(entityManager);
 		ModelDAO modelDAO = new ModelDAOImpl(entityManager);
 		ModificationDAO modifDAO = new ModificationDAOImpl(entityManager);
 		entityManager.getTransaction().begin();
 		// find or create mark
+		
 		Mark markData = markDAO.findOrCreate(mark);
-		Model modelData = modelDAO.findOrCreate(markData, model);
+		CarModel modelData = modelDAO.findOrCreate(markData, model);
 		Modification modif = modifDAO.findOne(modelData, modification);
 		if (modif != null) {
 			entityManager.getTransaction().rollback();
-			throw new SQLException("This car (" + mark + " " + model + " "
+			throw new Exception("This car (" + mark + " " + model + " "
 					+ modification + ") is exist!");
 		}
+		modif = new Modification();
+		modif.setModel(modelData);
+		modif.setName(modification);
 
 		modif = modifDAO.create(modif);
 
@@ -100,18 +96,20 @@ public class CarServiceImpl
 	 *            car modification
 	 */
 	public final void removeCar(final String mark, final String model,
-			final String modification) {
+			final String modification) throws Exception {
 		// search mark by name
 		MarkDAO markDAO = new MarkDAOImpl(entityManager);
 		Mark markEntity = markDAO.findOne(mark);
 		if (markEntity == null) {
-			throw new NoResultException("No found mark with name " + mark);
+			LOG.debug("Mark {} not exist",mark);
+			throw new Exception("No found mark with name " + mark);
 		}
 
 		ModelDAO modelDAO = new ModelDAOImpl(entityManager);
-		Model modelEntity = modelDAO.findOne(markEntity, model);
+		CarModel modelEntity = modelDAO.findOne(markEntity, model);
 		if (modelEntity == null) {
-			throw new NoResultException("No found mark with name " + mark
+			LOG.debug("Model {} {} not exist",mark, model);
+			throw new Exception("No found mark with name " + mark
 					+ " and model name " + model);
 		}
 
@@ -120,7 +118,8 @@ public class CarServiceImpl
 				modification);
 
 		if (modifEntity == null) {
-			throw new NoResultException("No found mark with name " + mark
+			LOG.debug("Modification {} {} {} not exist",mark,model, modification);
+			throw new Exception("No found mark with name " + mark
 					+ ", model name " + model + " and modification "
 					+ modification);
 		}
@@ -149,7 +148,7 @@ public class CarServiceImpl
 		}
 
 		ModelDAO modelDAO = new ModelDAOImpl(entityManager);
-		Model modelEntity = modelDAO.findOne(markEntity, model);
+		CarModel modelEntity = modelDAO.findOne(markEntity, model);
 		if (modelEntity == null) {
 			throw new NoResultException("Model with name " + model
 					+ " and mark " + mark + " not founded");
@@ -166,6 +165,26 @@ public class CarServiceImpl
 
 		Mapper mapper = new MainMapper();
 		return mapper.map(modifEntity, CarDomain.class);
+	}
+
+	public List<CarDomain> findByMarkName(String markName) {
+		List<Modification> modif = dao.findByMark(markName);
+		
+		Mapper mapper = new MainMapper();
+		return mapper.mapAsList(modif, CarDomain.class);
+	}
+
+	public List<String> getMarks() {
+		MarkDAO markDAO = new  MarkDAOImpl(entityManager);
+		return markDAO.findAllNames();
+	}
+
+	public List<CarDomain> findByMarkAndModel(String markName, String modelName) {
+		
+		List<Modification> modif = dao.findByMarkAndModel(markName,modelName);
+		
+		Mapper mapper = new MainMapper();
+		return mapper.mapAsList(modif, CarDomain.class);
 	}
 
 }

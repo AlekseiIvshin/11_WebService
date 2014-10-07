@@ -3,7 +3,7 @@ package service.merchant;
 import service.DomainServiceImpl;
 import dao.merchant.Merchant;
 import dao.merchant.MerchantDAOImpl;
-import domain.merchant.MerchantDomain;
+import domain.MerchantDomain;
 
 /**
  * Merchant service implementation.

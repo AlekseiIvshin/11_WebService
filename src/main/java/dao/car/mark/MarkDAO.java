@@ -38,4 +38,6 @@ public interface MarkDAO extends GenericDAO<Mark, Integer> {
 	 * @return founded or created mark
 	 */
 	Mark findOrCreate(String name);
+
+	List<String> findAllNames();
 }

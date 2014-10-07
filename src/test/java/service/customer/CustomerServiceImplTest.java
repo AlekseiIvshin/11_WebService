@@ -4,14 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import domain.customer.CustomerDomainImpl;
+import domain.CustomerDomain;
 
 public class CustomerServiceImplTest {
 
 	@Test
 	public void testFindByPassportStringString() {
 		CustomerServiceImpl serviceImpl = new CustomerServiceImpl();
-		CustomerDomainImpl customer = serviceImpl.findByPassport("9100", "100100");
+		CustomerDomain customer = serviceImpl.findByPassport("9100", "100100");
 		assertNotNull(customer);
 	}
 

@@ -1,4 +1,4 @@
-package domain.customer;
+package domain;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Aleksei_Ivshin
  *
  */
-public class CustomerDomainImpl implements CustomerDomain {
+public class CustomerDomain{
 
 	/**
 	 * Customer id.
@@ -42,7 +42,7 @@ public class CustomerDomainImpl implements CustomerDomain {
 	/**
 	 * Default constructor.
 	 */
-	public CustomerDomainImpl() {
+	public CustomerDomain() {
 	};
 
 	/**
@@ -51,12 +51,16 @@ public class CustomerDomainImpl implements CustomerDomain {
 	 * @param id
 	 *            customer id
 	 */
-	public CustomerDomainImpl(int id) {
+	public CustomerDomain(int id) {
 		this.id = id;
 	}
 
 	public int getId() {
 		return id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
 	}
 
 	public String getName() {

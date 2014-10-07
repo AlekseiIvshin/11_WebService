@@ -1,10 +1,10 @@
 package service.sales;
 
 import service.DomainService;
-import domain.car.CarDomain;
-import domain.customer.CustomerDomain;
-import domain.merchant.MerchantDomain;
-import domain.sales.SalesDomain;
+import domain.CarDomain;
+import domain.CustomerDomain;
+import domain.MerchantDomain;
+import domain.SalesDomain;
 
 /**
  * Sales service interface.

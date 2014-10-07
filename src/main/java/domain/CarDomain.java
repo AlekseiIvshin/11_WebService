@@ -1,16 +1,16 @@
-package domain.car;
+package domain;
 
 /**
  * Car domain implementation.
  * @author Aleksei_Ivshin
  *
  */
-public class CarDomainImpl implements CarDomain {
+public class CarDomain {
 
 	/**
 	 * Car id.
 	 */
-	private final long id;
+	private long id;
 	
 	/**
 	 * Car mark name.
@@ -31,7 +31,14 @@ public class CarDomainImpl implements CarDomain {
 	 * Constructor with set car id.
 	 * @param id car id
 	 */
-	public CarDomainImpl(final long id) {
+	public CarDomain(final long id) {
+		this.id = id;
+	}
+	
+
+	public CarDomain() {}
+	
+	public void setId(long id){
 		this.id = id;
 	}
 

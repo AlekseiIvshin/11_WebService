@@ -1,10 +1,6 @@
-package domain.sales;
+package domain;
 
 import java.util.Date;
-
-import domain.car.CarDomain;
-import domain.customer.CustomerDomain;
-import domain.merchant.MerchantDomain;
 
 /**
  * Sale Domain implementation.
@@ -12,7 +8,7 @@ import domain.merchant.MerchantDomain;
  * @author Aleksei_Ivshin
  *
  */
-public class SalesDomainImpl implements SalesDomain {
+public class SalesDomain{
 
 	/**
 	 * Sale id.

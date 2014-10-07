@@ -1,13 +1,12 @@
-package domain.store;
+package domain;
 
-import domain.car.CarDomain;
 
 /**
  * Store domain implementation.
  * @author Aleksei_Ivshin
  *
  */
-public class StoreDomainImpl implements StoreDomain {
+public class StoreDomain{
 
 	/**
 	 * Store item id.

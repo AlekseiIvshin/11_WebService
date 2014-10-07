@@ -1,5 +1,5 @@
 
-package service.customer.jaxws;
+package webservice.jaxws;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,13 +7,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "findByPassport", namespace = "http://customer.service/")
+@XmlRootElement(name = "findCustomerByPassport", namespace = "http://webservice/")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "findByPassport", namespace = "http://customer.service/", propOrder = {
+@XmlType(name = "findCustomerByPassport", namespace = "http://webservice/", propOrder = {
     "series",
     "number"
 })
-public class FindByPassport {
+public class FindCustomerByPassport {
 
     @XmlElement(name = "series", namespace = "")
     private String series;
