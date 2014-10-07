@@ -7,6 +7,7 @@ import javax.persistence.criteria.Root;
 
 import dao.GenericDAOImpl;
 import dao.car.modification.Modification;
+import domain.StoreDomain;
 
 /**
  * Store DAO implementation.

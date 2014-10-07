@@ -32,5 +32,8 @@ public interface ModificationDAO extends GenericDAO<Modification, Long> {
 	 * @return founded modification or null (if not found)
 	 */
 	Modification findOne(CarModel model, String name);
+
+
+	List<Modification> findByMark(String markName);
 	
 }

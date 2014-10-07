@@ -90,4 +90,9 @@ public class MarkDAOImpl extends GenericDAOImpl<Mark, Integer> implements
 		return markData;
 	}
 
+	@Override
+	public List<String> findAllNames() {
+		return entityManager.createQuery("SELECT mark.name FROM Mark mark").getResultList();
+	}
+
 }

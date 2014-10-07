@@ -2,6 +2,7 @@ package webservice;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.persistence.NoResultException;
@@ -112,6 +113,20 @@ public class AutoshowServiceTest {
 	@Test
 	public void testGetMerchantById() {
 		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testGetCarByMark(){
+		List<CarDomain> cars = service.getCarByMark("Audi");
+		assertNotNull(cars);
+		assertNotEquals(cars.size(), 0);
+	}
+	
+	@Test
+	public void testGetAllMarks(){
+		List<String> marks = service.getCarMarkList();
+		assertNotNull(marks);
+		assertNotEquals(marks.size(), 0);
 	}
 
 }

@@ -1,8 +1,10 @@
 package service.car;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.persistence.NoResultException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -163,6 +165,26 @@ public class CarServiceImpl
 
 		Mapper mapper = new MainMapper();
 		return mapper.map(modifEntity, CarDomain.class);
+	}
+
+	public List<CarDomain> findByMarkName(String markName) {
+		List<Modification> modif = dao.findByMark(markName);
+		
+		Mapper mapper = new MainMapper();
+		return mapper.mapAsList(modif, CarDomain.class);
+	}
+
+	public List<String> getMarks() {
+		MarkDAO markDAO = new  MarkDAOImpl(entityManager);
+		return markDAO.findAllNames();
+	}
+
+	public List<CarDomain> findByMarkAndModel(String markName, String modelName) {
+		
+		List<Modification> modif = dao.findByMarkAndModel(markName,modelName);
+		
+		Mapper mapper = new MainMapper();
+		return mapper.mapAsList(modif, CarDomain.class);
 	}
 
 }
