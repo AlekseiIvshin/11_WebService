@@ -3,7 +3,7 @@ package dao.car.model;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -35,8 +35,8 @@ public class ModelDAOImpl extends GenericDAOImpl<CarModel, Integer> implements
 	 * @param entityManager
 	 *            entity manager
 	 */
-	public ModelDAOImpl(final EntityManager entityManager) {
-		super(entityManager);
+	public ModelDAOImpl(final EntityManagerFactory entityManagerFactory) {
+		super(entityManagerFactory);
 	}
 
 	/**
@@ -49,13 +49,24 @@ public class ModelDAOImpl extends GenericDAOImpl<CarModel, Integer> implements
 	 * @return founded models
 	 */
 	public final List<CarModel> findAny(final Mark mark, final String name) {
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<CarModel> query = builder.createQuery(CarModel.class);
 		Root<CarModel> root = query.from(CarModel.class);
 		query.where(builder.like(root.get(CarModel_.name), name))
-				.where(builder.equal(root.get(CarModel_.mark), mark)).select(root);
-		TypedQuery<CarModel> ctq = entityManager.createQuery(query);
-		return ctq.getResultList();
+				.where(builder.equal(root.get(CarModel_.mark), mark))
+				.select(root);
+		List<CarModel> result = null;
+		try {
+			TypedQuery<CarModel> ctq = entityManager.createQuery(query);
+			result = ctq.getResultList();
+		} catch (Exception e) {
+			LOG.error("Find any car model", e);
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 	/**
@@ -68,6 +79,8 @@ public class ModelDAOImpl extends GenericDAOImpl<CarModel, Integer> implements
 	 * @return founded model or null (if not found)
 	 */
 	public final CarModel findOne(final Mark mark, final String name) {
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<CarModel> query = builder.createQuery(CarModel.class);
 		Root<CarModel> root = query.from(CarModel.class);
@@ -75,12 +88,16 @@ public class ModelDAOImpl extends GenericDAOImpl<CarModel, Integer> implements
 				builder.and(builder.equal(root.get(CarModel_.mark), mark),
 						builder.equal(root.get(CarModel_.name), name))).select(
 				root);
-		TypedQuery<CarModel> ctq = entityManager.createQuery(query);
+		CarModel result = null;
 		try {
-			return ctq.getSingleResult();
-		} catch (NoResultException e) {
-			return null;
+			TypedQuery<CarModel> ctq = entityManager.createQuery(query);
+			result = ctq.getSingleResult();
+		} catch (Exception e) {
+			LOG.error("Find one model", e);
+		} finally {
+			entityManager.close();
 		}
+		return result;
 	}
 
 	/**

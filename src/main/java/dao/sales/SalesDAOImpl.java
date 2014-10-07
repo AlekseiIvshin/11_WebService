@@ -3,6 +3,7 @@ package dao.sales;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 
 import org.slf4j.Logger;
@@ -26,16 +27,15 @@ import dao.store.StoreDAOImpl;
 public class SalesDAOImpl extends GenericDAOImpl<Sales, Integer> implements
 		SalesDAO {
 
-	
-
 	static final Logger logger = LoggerFactory.getLogger(SalesDAOImpl.class);
+
 	/**
 	 * Constructor.
 	 * 
 	 * @param entityManager
 	 */
-	public SalesDAOImpl(final EntityManager entityManager) {
-		super(entityManager);
+	public SalesDAOImpl(final EntityManagerFactory entityManagerFactory) {
+		super(entityManagerFactory);
 	}
 
 	/**
@@ -47,11 +47,19 @@ public class SalesDAOImpl extends GenericDAOImpl<Sales, Integer> implements
 	 */
 	@SuppressWarnings("unchecked")
 	public final List<Sales> find(final Modification modification) {
-		return entityManager
-				.createQuery(
-						"SELECT s FROM Sales s "
-								+ "WHERE s.modification=:modif")
-				.setParameter("modif", modification).getResultList();
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		List<Sales> result = null;
+		try {
+			result = entityManager
+					.createQuery(
+							"SELECT s FROM Sales s "
+									+ "WHERE s.modification=:modif")
+					.setParameter("modif", modification).getResultList();
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 	/**
@@ -63,10 +71,19 @@ public class SalesDAOImpl extends GenericDAOImpl<Sales, Integer> implements
 	 */
 	@SuppressWarnings("unchecked")
 	public final List<Sales> find(final Customer customer) {
-		return entityManager
-				.createQuery(
-						"SELECT s FROM Sales s " + "WHERE s.customer=:customer")
-				.setParameter("customer", customer).getResultList();
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		List<Sales> result = null;
+		try {
+			result = entityManager
+					.createQuery(
+							"SELECT s FROM Sales s "
+									+ "WHERE s.customer=:customer")
+					.setParameter("customer", customer).getResultList();
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 	/**
@@ -78,10 +95,19 @@ public class SalesDAOImpl extends GenericDAOImpl<Sales, Integer> implements
 	 */
 	@SuppressWarnings("unchecked")
 	public final List<Sales> find(final Merchant merchant) {
-		return entityManager
-				.createQuery(
-						"SELECT s FROM Sales s " + "WHERE s.merchant=:merchant")
-				.setParameter("merchant", merchant).getResultList();
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		List<Sales> result = null;
+		try {
+			result = entityManager
+					.createQuery(
+							"SELECT s FROM Sales s "
+									+ "WHERE s.merchant=:merchant")
+					.setParameter("merchant", merchant).getResultList();
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 	/**
@@ -97,12 +123,16 @@ public class SalesDAOImpl extends GenericDAOImpl<Sales, Integer> implements
 	 */
 	public final Sales newSaleAndUpdateStore(final Customer customer,
 			final Merchant merchant, final Modification modification) {
-		Store store = new StoreDAOImpl(entityManager).find(modification);
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+
+		Store store = new StoreDAOImpl(entityManagerFactory).find(modification);
 		if (store == null || store.getCount() == 0) {
 			throw new NoResultException("Car " + modification.toString()
 					+ " is not exist in store.");
 		}
 		entityManager.getTransaction().begin();
+		Sales result = null;
 		try {
 			Sales sales = new Sales();
 			sales.setPrice(store.getPrice());
@@ -113,12 +143,13 @@ public class SalesDAOImpl extends GenericDAOImpl<Sales, Integer> implements
 			store.setCount(store.getCount() - 1);
 			entityManager.merge(store);
 			entityManager.getTransaction().commit();
-			return sales;
+			result = sales;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			logger.error("Store can't update",e);
-			throw new IllegalArgumentException("Store can't update: "
-					+ e.getMessage());
+			logger.error("Store can't update", e);
+		} finally{
+			entityManager.close();
 		}
+		return result;
 	}
 }

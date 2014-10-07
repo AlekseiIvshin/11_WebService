@@ -1,6 +1,10 @@
 package webservice;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.util.Date;
 import java.util.List;
@@ -9,7 +13,6 @@ import java.util.Random;
 import javax.persistence.NoResultException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import domain.CarDomain;
@@ -43,7 +46,6 @@ public class AutoshowServiceTest {
 		assertEquals(car.getId(), 1);
 	}
 
-
 	@Test
 	public void testAddAndRemoveCar() {
 		Random rnd = new Random();
@@ -54,6 +56,7 @@ public class AutoshowServiceTest {
 		try {
 			newCar = service.addCar(carMark, carModel, carModification);
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 		assertNotNull(newCar);
@@ -68,13 +71,19 @@ public class AutoshowServiceTest {
 		try {
 			assertNull(service.findOneCar(carMark, carModel, carModification));
 			fail("Car is found!!!");
-		} catch (NoResultException e) {
+		} catch (Exception e) {
 		}
 	}
 
 	@Test
 	public void testFindOneCar() {
-		CarDomain car = service.findOneCar("Audi", "R8", "6.2 MT (442 hs)");
+		CarDomain car;
+		try {
+			car = service.findOneCar("Audi", "R8", "6.2 MT (442 hs)");
+		} catch (Exception e) {
+			fail(e.getMessage());
+			return;
+		}
 		assertNotNull(car);
 		assertEquals(car.getMark(), "Audi");
 		assertEquals(car.getModel(), "R8");
@@ -83,25 +92,26 @@ public class AutoshowServiceTest {
 	}
 
 	@Test
-	public void getCarByMarkAndModel(){
+	public void getCarByMarkAndModel() {
 		List<CarDomain> cars = service.getCarByMarkAndModel("Audi", "R8");
 		assertNotNull(cars);
 		assertFalse(cars.isEmpty());
 	}
-	
+
 	@Test
-	public void getAllMerchants(){
+	public void getAllMerchants() {
 		List<MerchantDomain> merchants = service.getAllMerchants();
 		assertNotNull(merchants);
 		assertFalse(merchants.isEmpty());
 	}
+
 	@Test
-	public void getMerchantById(){
+	public void getMerchantById() {
 		assertNotNull(service.getMerchantById(1));
 	}
-	
+
 	@Test
-	public void testSaleCar(){
+	public void testSaleCar() {
 		CustomerDomain customer = new CustomerDomain();
 		customer.setName("Ivan");
 		customer.setSurname("Ivanov");
@@ -124,26 +134,27 @@ public class AutoshowServiceTest {
 		assertNotNull(sale);
 		assertEquals(sale.getMerchant().getId(), merchant.getId());
 		assertEquals(sale.getCar().getId(), car.getId());
-		assertEquals(sale.getCustomer().getPassportSeries(), customer.getPassportSeries());
-		assertEquals(sale.getCustomer().getPassportNumber(), customer.getPassportNumber());
+		assertEquals(sale.getCustomer().getPassportSeries(),
+				customer.getPassportSeries());
+		assertEquals(sale.getCustomer().getPassportNumber(),
+				customer.getPassportNumber());
 		StoreDomain storeAfter = service.getStore(car);
 		assertNotNull(storeAfter);
-		//assertEquals(storeBefore.getQuantity()-1, storeAfter.getQuantity());
+		// assertEquals(storeBefore.getQuantity()-1, storeAfter.getQuantity());
 	}
-	
+
 	@Test
-	public void testGetCarByMark(){
+	public void testGetCarByMark() {
 		List<CarDomain> cars = service.getCarByMark("Audi");
 		assertNotNull(cars);
 		assertFalse(cars.isEmpty());
 	}
-	
+
 	@Test
-	public void testGetAllMarks(){
+	public void testGetAllMarks() {
 		List<String> marks = service.getCarMarkList();
 		assertNotNull(marks);
 		assertFalse(marks.isEmpty());
 	}
-	
 
 }

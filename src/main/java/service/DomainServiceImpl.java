@@ -4,7 +4,6 @@ import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -35,11 +34,8 @@ import dao.GenericDAO;
 public abstract class DomainServiceImpl<DomainClass, DomainId, Model, IdType, 
 		DAOClass extends GenericDAO<Model, IdType>>
 		implements DomainService<DomainClass, IdType> {
-
-	/**
-	 * Entity manager.
-	 */
-	protected EntityManager entityManager;
+	
+	protected EntityManagerFactory entityManagerFactory;
 	/**
 	 * DAO class.
 	 */
@@ -67,9 +63,8 @@ public abstract class DomainServiceImpl<DomainClass, DomainId, Model, IdType,
 	 */
 	@SuppressWarnings("unchecked")
 	public DomainServiceImpl() {
-		EntityManagerFactory entityManagerFactory = Persistence
+		entityManagerFactory = Persistence
 				.createEntityManagerFactory("AutoShow");
-		entityManager = entityManagerFactory.createEntityManager();
 		this.domainType = (Class<DomainClass>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 		this.modelType = (Class<Model>) ((ParameterizedType) getClass()
@@ -98,12 +93,10 @@ public abstract class DomainServiceImpl<DomainClass, DomainId, Model, IdType,
 		Model modelClass = mapper.map(changedData, modelType);
 		DomainClass result = null;
 		try {
-			entityManager.getTransaction().begin();
 			Model changedCustomer = dao.update(modelClass);
-			entityManager.getTransaction().commit();
 			result = mapper.map(changedCustomer, domainType);
 		} catch (Exception e) {
-			entityManager.getTransaction().rollback();
+			LOG.error("Change entity error",e);
 		} 
 		return result;
 	}
@@ -121,13 +114,10 @@ public abstract class DomainServiceImpl<DomainClass, DomainId, Model, IdType,
 
 		DomainClass result = null;
 		try {
-			entityManager.getTransaction().begin();
 			Model persistedData = dao.create(model);
-			entityManager.getTransaction().commit();
 			result = mapper.map(persistedData, domainType);
 		} catch (Exception e) {
-			entityManager.getTransaction().rollback();
-			throw new SQLException(e.getMessage());
+			LOG.error("Create entity error",e);
 		}
 		return result;
 	}
@@ -167,11 +157,9 @@ public abstract class DomainServiceImpl<DomainClass, DomainId, Model, IdType,
 	public final void remove(final DomainClass obj) {
 		Model entity = mapper.map(obj, modelType);
 		try {
-			entityManager.getTransaction().begin();
 			dao.delete(entity);
-			entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			entityManager.getTransaction().rollback();
+			LOG.error("Delete",e);
 		}
 	}
 
