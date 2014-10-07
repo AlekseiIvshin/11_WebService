@@ -24,7 +24,7 @@ public class StoreServiceImpl extends
 	 */
 	public StoreServiceImpl() {
 		super();
-		dao = new StoreDAOImpl(entityManager);
+		dao = new StoreDAOImpl(entityManagerFactory);
 	}
 
 	/**

@@ -71,11 +71,12 @@ public interface ShowService {
 	 * @param modification
 	 *            modification
 	 * @return first result of found cars
+	 * @throws Exception 
 	 */
 	@WebMethod
 	public CarDomain findOneCar(@WebParam(name = "markName") String mark,
 			@WebParam(name = "modelName") String model,
-			@WebParam(name = "modificationName") String modification);
+			@WebParam(name = "modificationName") String modification) throws Exception;
 
 	/**
 	 * Cat car by id

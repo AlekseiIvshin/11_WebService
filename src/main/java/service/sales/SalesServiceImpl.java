@@ -30,7 +30,7 @@ public class SalesServiceImpl extends
 	 */
 	public SalesServiceImpl() {
 		super();
-		dao = new SalesDAOImpl(entityManager);
+		dao = new SalesDAOImpl(entityManagerFactory);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class SalesServiceImpl extends
 		Merchant merch = mapper.map(merchant, Merchant.class);
 		Modification modif = mapper.map(car, Modification.class);
 
-		CustomerDAO customerDAO = new CustomerDAOImpl(entityManager);
+		CustomerDAO customerDAO = new CustomerDAOImpl(entityManagerFactory);
 
 		Customer persisted = customerDAO.findByPassport(cust);
 		if(persisted==null){

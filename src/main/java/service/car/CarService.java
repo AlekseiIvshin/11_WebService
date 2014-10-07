@@ -40,8 +40,9 @@ public interface CarService extends DomainService<CarDomain, Long> {
 	 * @param model model name
 	 * @param modification modification
 	 * @return founded car
+	 * @throws Exception 
 	 */
-	CarDomain findOne(String mark, String model, String modification);
+	CarDomain findOne(String mark, String model, String modification) throws Exception;
 
 	List<String> getMarks();
 	

@@ -1,8 +1,7 @@
 package service.car;
 
-import static org.junit.Assert.*;
-
-import java.sql.SQLException;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -21,7 +20,11 @@ public class CarServiceImplTest {
 	@Test
 	public void testFindOne() {
 		CarServiceImpl carservice  = new CarServiceImpl();
-		assertNotNull(carservice.findOne("Audi", "R8", "6.2 MT (442 hs)"));
+		try {
+			assertNotNull(carservice.findOne("Audi", "R8", "6.2 MT (442 hs)"));
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
 	}
 
 }

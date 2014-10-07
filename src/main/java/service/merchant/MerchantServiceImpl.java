@@ -22,7 +22,7 @@ public class MerchantServiceImpl
 	 */
 	public MerchantServiceImpl() {
 		super();
-		dao = new MerchantDAOImpl(entityManager);
+		dao = new MerchantDAOImpl(entityManagerFactory);
 	}
 
 }

@@ -28,7 +28,7 @@ public class CustomerServiceImpl
 	 */
 	public CustomerServiceImpl() {
 		super();
-		dao = new CustomerDAOImpl(entityManager);
+		dao = new CustomerDAOImpl(entityManagerFactory);
 	}
 
 	/**

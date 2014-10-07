@@ -48,7 +48,7 @@ public class AutoshowService implements ShowService {
 	}
 
 	@Override
-	public CarDomain findOneCar(String mark, String model, String modification) {
+	public CarDomain findOneCar(String mark, String model, String modification) throws Exception {
 		return carService.findOne(mark, model, modification);
 	}
 
