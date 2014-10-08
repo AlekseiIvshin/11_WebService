@@ -4,20 +4,26 @@ import java.util.List;
 
 import javax.jws.WebService;
 
+import domain.CarDomain;
+import domain.CustomerDomain;
+import domain.MerchantDomain;
+import mapper.MainMapper;
+import mapper.Mapper;
 import service.car.CarServiceImpl;
 import service.customer.CustomerService;
 import service.customer.CustomerServiceImpl;
 import service.merchant.MerchantServiceImpl;
 import service.sales.SalesServiceImpl;
 import service.store.StoreServiceImpl;
-import domain.CarDomain;
-import domain.CustomerDomain;
-import domain.MerchantDomain;
-import domain.SalesDomain;
-import domain.StoreDomain;
+import webservice.elements.CarElement;
+import webservice.elements.CustomerElement;
+import webservice.elements.MerchantElement;
+import webservice.elements.SalesElement;
+import webservice.elements.StoreElement;
 
 @WebService(endpointInterface = "webservice.ShowService")
 public class AutoshowService implements ShowService {
+	Mapper mapper = new MainMapper();
 
 	private CustomerService customerService = new CustomerServiceImpl();
 	private CarServiceImpl carService = new CarServiceImpl();
@@ -26,19 +32,21 @@ public class AutoshowService implements ShowService {
 	private StoreServiceImpl storeService = new StoreServiceImpl();
 
 	@Override
-	public CustomerDomain findCustomerByPassport(String series, String number) {
-		return customerService.findByPassport(series, number);
+	public CustomerElement findCustomerByPassport(String series, String number) {
+		return mapper.map(customerService.findByPassport(series, number),
+				CustomerElement.class);
 	}
 
 	@Override
-	public CarDomain getCarById(long carId) {
-		return carService.get(carId);
+	public CarElement getCarById(long carId) {
+		return mapper.map(carService.get(carId), CarElement.class);
 	}
 
 	@Override
-	public CarDomain addCar(String mark, String model, String modification)
+	public CarElement addCar(String mark, String model, String modification)
 			throws Exception {
-		return carService.addCar(mark, model, modification);
+		return mapper.map(carService.addCar(mark, model, modification),
+				CarElement.class);
 	}
 
 	@Override
@@ -48,39 +56,52 @@ public class AutoshowService implements ShowService {
 	}
 
 	@Override
-	public CarDomain findOneCar(String mark, String model, String modification) throws Exception {
-		return carService.findOne(mark, model, modification);
+	public CarElement findOneCar(String mark, String model, String modification)
+			throws Exception {
+		return mapper.map(carService.findOne(mark, model, modification),
+				CarElement.class);
 	}
 
 	@Override
-	public SalesDomain newSaleAndUpdateStore(CustomerDomain customer,
-			MerchantDomain merchant, CarDomain car) throws Exception {
-		return salesService.newSaleAndUpdateStore(customer, merchant, car);
+	public SalesElement newSaleAndUpdateStore(CustomerElement customer,
+			MerchantElement merchant, CarElement car) throws Exception {
+		CarDomain carDom = mapper.map(car, CarDomain.class);
+		CustomerDomain customerDom = mapper.map(customer, CustomerDomain.class);
+		MerchantDomain merchantDom = mapper.map(merchant, MerchantDomain.class);
+		return mapper.map(salesService.newSaleAndUpdateStore(customerDom,
+				merchantDom, carDom), SalesElement.class);
 	}
 
 	@Override
-	public StoreDomain getStore(CarDomain car) {
-		return storeService.get(car);
+	public StoreElement getStore(CarElement car) {
+		return mapper.map(storeService.get(mapper.map(car, CarDomain.class)),
+				StoreElement.class);
 	}
 
 	@Override
-	public MerchantDomain getMerchantById(int merchantId) {
-		return merchantService.get(merchantId);
+	public MerchantElement getMerchantById(int merchantId) {
+		return mapper.map(merchantService.get(merchantId),
+				MerchantElement.class);
 	}
 
 	@Override
-	public List<CarDomain> getCarByMark(String markName) {
-		return carService.findByMarkName(markName);
+	public List<CarElement> getCarByMark(String markName) {
+		return mapper.mapAsList(carService.findByMarkName(markName),
+				CarElement.class);
 	}
 
 	@Override
-	public List<CarDomain> getCarByMarkAndModel(String markName, String modelName) {
-		return carService.findByMarkAndModel(markName, modelName);
+	public List<CarElement> getCarByMarkAndModel(String markName,
+			String modelName) {
+		return mapper.mapAsList(
+				carService.findByMarkAndModel(markName, modelName),
+				CarElement.class);
 	}
 
 	@Override
-	public List<MerchantDomain> getAllMerchants() {
-		return merchantService.getAll();
+	public List<MerchantElement> getAllMerchants() {
+		return mapper
+				.mapAsList(merchantService.getAll(), MerchantElement.class);
 	}
 
 	@Override
@@ -89,12 +110,12 @@ public class AutoshowService implements ShowService {
 	}
 
 	@Override
-	public List<SalesDomain> getAllSales() {
-		return salesService.getAll();
+	public List<SalesElement> getAllSales() {
+		return mapper.mapAsList(salesService.getAll(), SalesElement.class);
 	}
 
 	@Override
-	public List<StoreDomain> getAllStores() {
-		return storeService.getAll();
+	public List<StoreElement> getAllStores() {
+		return mapper.mapAsList(storeService.getAll(), StoreElement.class);
 	}
 }

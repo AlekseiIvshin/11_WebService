@@ -13,14 +13,14 @@ import javax.xml.bind.annotation.XmlType;
 public class FindCustomerByPassportResponse {
 
     @XmlElement(name = "return", namespace = "")
-    private domain.CustomerDomain _return;
+    private webservice.elements.CustomerElement _return;
 
     /**
      * 
      * @return
-     *     returns CustomerDomain
+     *     returns CustomerElement
      */
-    public domain.CustomerDomain getReturn() {
+    public webservice.elements.CustomerElement getReturn() {
         return this._return;
     }
 
@@ -29,7 +29,7 @@ public class FindCustomerByPassportResponse {
      * @param _return
      *     the value for the _return property
      */
-    public void setReturn(domain.CustomerDomain _return) {
+    public void setReturn(webservice.elements.CustomerElement _return) {
         this._return = _return;
     }
 

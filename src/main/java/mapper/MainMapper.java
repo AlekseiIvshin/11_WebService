@@ -9,6 +9,11 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import webservice.elements.CarElement;
+import webservice.elements.CustomerElement;
+import webservice.elements.MerchantElement;
+import webservice.elements.SalesElement;
+import webservice.elements.StoreElement;
 import dao.car.modification.Modification;
 import dao.customer.Customer;
 import dao.merchant.Merchant;
@@ -83,6 +88,26 @@ public class MainMapper implements Mapper {
 				.field("merchant", "merchant").field("saleDate", "saleDate")
 				.field("price", "price").field("car", "modification")
 				.register();
+
+		// Customer Domain to Customer Element
+		mapperFactory.classMap(CustomerDomain.class, CustomerElement.class)
+				.byDefault().register();
+
+		// Merchant domain to Merchant Element
+		mapperFactory.classMap(MerchantDomain.class, MerchantElement.class)
+				.byDefault().register();
+
+		// Car domain to Car Modification Element
+		mapperFactory.classMap(CarDomain.class, CarElement.class).byDefault()
+				.register();
+
+		// Store domain to Store Element
+		mapperFactory.classMap(StoreDomain.class, StoreElement.class)
+				.byDefault().register();
+
+		// Sales domain to sales Element
+		mapperFactory.classMap(SalesDomain.class, SalesElement.class)
+				.byDefault().register();
 
 	}
 

@@ -13,14 +13,14 @@ import javax.xml.bind.annotation.XmlType;
 public class GetStore {
 
     @XmlElement(name = "car", namespace = "")
-    private domain.CarDomain car;
+    private webservice.elements.CarElement car;
 
     /**
      * 
      * @return
-     *     returns CarDomain
+     *     returns CarElement
      */
-    public domain.CarDomain getCar() {
+    public webservice.elements.CarElement getCar() {
         return this.car;
     }
 
@@ -29,7 +29,7 @@ public class GetStore {
      * @param car
      *     the value for the car property
      */
-    public void setCar(domain.CarDomain car) {
+    public void setCar(webservice.elements.CarElement car) {
         this.car = car;
     }
 

@@ -6,11 +6,11 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-import domain.CarDomain;
-import domain.CustomerDomain;
-import domain.MerchantDomain;
-import domain.SalesDomain;
-import domain.StoreDomain;
+import webservice.elements.CarElement;
+import webservice.elements.CustomerElement;
+import webservice.elements.MerchantElement;
+import webservice.elements.SalesElement;
+import webservice.elements.StoreElement;
 
 @WebService
 public interface ShowService {
@@ -24,7 +24,7 @@ public interface ShowService {
 	 * @return found customer
 	 */
 	@WebMethod
-	public CustomerDomain findCustomerByPassport(
+	public CustomerElement findCustomerByPassport(
 			@WebParam(name = "series") String series,
 			@WebParam(name = "number") String number);
 
@@ -44,7 +44,7 @@ public interface ShowService {
 	 * @return
 	 */
 	@WebMethod
-	public List<CarDomain> getCarByMark(
+	public List<CarElement> getCarByMark(
 			@WebParam(name = "markName") String markName);
 
 	/**
@@ -57,7 +57,7 @@ public interface ShowService {
 	 * @return
 	 */
 	@WebMethod
-	public List<CarDomain> getCarByMarkAndModel(
+	public List<CarElement> getCarByMarkAndModel(
 			@WebParam(name = "markName") String markName,
 			@WebParam(name = "modelName") String modelName);
 
@@ -74,7 +74,7 @@ public interface ShowService {
 	 * @throws Exception 
 	 */
 	@WebMethod
-	public CarDomain findOneCar(@WebParam(name = "markName") String mark,
+	public CarElement findOneCar(@WebParam(name = "markName") String mark,
 			@WebParam(name = "modelName") String model,
 			@WebParam(name = "modificationName") String modification) throws Exception;
 
@@ -86,7 +86,7 @@ public interface ShowService {
 	 * @return found car
 	 */
 	@WebMethod
-	public CarDomain getCarById(@WebParam(name = "carId") long carId);
+	public CarElement getCarById(@WebParam(name = "carId") long carId);
 
 	/**
 	 * Add new car to data storage.
@@ -102,7 +102,7 @@ public interface ShowService {
 	 *             throw if modification already exist
 	 */
 	@WebMethod
-	public CarDomain addCar(@WebParam(name = "markName") String mark,
+	public CarElement addCar(@WebParam(name = "markName") String mark,
 			@WebParam(name = "modelName") String model,
 			@WebParam(name = "modificationName") String modification)
 			throws Exception;
@@ -138,10 +138,10 @@ public interface ShowService {
 	 * @throws Exception
 	 */
 	@WebMethod
-	public SalesDomain newSaleAndUpdateStore(
-			@WebParam(name = "customer") CustomerDomain customer,
-			@WebParam(name = "merchant") MerchantDomain merchant,
-			@WebParam(name = "car") CarDomain car) throws Exception;
+	public SalesElement newSaleAndUpdateStore(
+			@WebParam(name = "customer") CustomerElement customer,
+			@WebParam(name = "merchant") MerchantElement merchant,
+			@WebParam(name = "car") CarElement car) throws Exception;
 
 	/**
 	 * Get store by car.
@@ -151,7 +151,7 @@ public interface ShowService {
 	 * @return found store item
 	 */
 	@WebMethod
-	public StoreDomain getStore(@WebParam(name = "car") CarDomain car);
+	public StoreElement getStore(@WebParam(name = "car") CarElement car);
 
 	
 	/**
@@ -162,7 +162,7 @@ public interface ShowService {
 	 * @return found merchant
 	 */
 	@WebMethod
-	public MerchantDomain getMerchantById(
+	public MerchantElement getMerchantById(
 			@WebParam(name = "merchantId") int merchantId);
 
 	/**
@@ -171,12 +171,12 @@ public interface ShowService {
 	 * @return all merchants.
 	 */
 	@WebMethod
-	public List<MerchantDomain> getAllMerchants();
+	public List<MerchantElement> getAllMerchants();
 	
 	@WebMethod
-	public List<SalesDomain> getAllSales();
+	public List<SalesElement> getAllSales();
 	
 	@WebMethod
-	public List<StoreDomain> getAllStores();
+	public List<StoreElement> getAllStores();
 
 }

@@ -13,14 +13,14 @@ import javax.xml.bind.annotation.XmlType;
 public class GetMerchantByIdResponse {
 
     @XmlElement(name = "return", namespace = "")
-    private domain.MerchantDomain _return;
+    private webservice.elements.MerchantElement _return;
 
     /**
      * 
      * @return
-     *     returns MerchantDomain
+     *     returns MerchantElement
      */
-    public domain.MerchantDomain getReturn() {
+    public webservice.elements.MerchantElement getReturn() {
         return this._return;
     }
 
@@ -29,7 +29,7 @@ public class GetMerchantByIdResponse {
      * @param _return
      *     the value for the _return property
      */
-    public void setReturn(domain.MerchantDomain _return) {
+    public void setReturn(webservice.elements.MerchantElement _return) {
         this._return = _return;
     }
 

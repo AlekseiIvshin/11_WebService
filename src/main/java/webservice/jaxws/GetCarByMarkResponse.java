@@ -14,14 +14,14 @@ import javax.xml.bind.annotation.XmlType;
 public class GetCarByMarkResponse {
 
     @XmlElement(name = "return", namespace = "")
-    private List<domain.CarDomain> _return;
+    private List<webservice.elements.CarElement> _return;
 
     /**
      * 
      * @return
-     *     returns List<CarDomain>
+     *     returns List<CarElement>
      */
-    public List<domain.CarDomain> getReturn() {
+    public List<webservice.elements.CarElement> getReturn() {
         return this._return;
     }
 
@@ -30,7 +30,7 @@ public class GetCarByMarkResponse {
      * @param _return
      *     the value for the _return property
      */
-    public void setReturn(List<domain.CarDomain> _return) {
+    public void setReturn(List<webservice.elements.CarElement> _return) {
         this._return = _return;
     }
 

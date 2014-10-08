@@ -13,14 +13,14 @@ import javax.xml.bind.annotation.XmlType;
 public class GetCarByIdResponse {
 
     @XmlElement(name = "return", namespace = "")
-    private domain.CarDomain _return;
+    private webservice.elements.CarElement _return;
 
     /**
      * 
      * @return
-     *     returns CarDomain
+     *     returns CarElement
      */
-    public domain.CarDomain getReturn() {
+    public webservice.elements.CarElement getReturn() {
         return this._return;
     }
 
@@ -29,7 +29,7 @@ public class GetCarByIdResponse {
      * @param _return
      *     the value for the _return property
      */
-    public void setReturn(domain.CarDomain _return) {
+    public void setReturn(webservice.elements.CarElement _return) {
         this._return = _return;
     }
 

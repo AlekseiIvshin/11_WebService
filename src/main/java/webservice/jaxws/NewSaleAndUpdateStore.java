@@ -17,18 +17,18 @@ import javax.xml.bind.annotation.XmlType;
 public class NewSaleAndUpdateStore {
 
     @XmlElement(name = "customer", namespace = "")
-    private domain.CustomerDomain customer;
+    private webservice.elements.CustomerElement customer;
     @XmlElement(name = "merchant", namespace = "")
-    private domain.MerchantDomain merchant;
+    private webservice.elements.MerchantElement merchant;
     @XmlElement(name = "car", namespace = "")
-    private domain.CarDomain car;
+    private webservice.elements.CarElement car;
 
     /**
      * 
      * @return
-     *     returns CustomerDomain
+     *     returns CustomerElement
      */
-    public domain.CustomerDomain getCustomer() {
+    public webservice.elements.CustomerElement getCustomer() {
         return this.customer;
     }
 
@@ -37,16 +37,16 @@ public class NewSaleAndUpdateStore {
      * @param customer
      *     the value for the customer property
      */
-    public void setCustomer(domain.CustomerDomain customer) {
+    public void setCustomer(webservice.elements.CustomerElement customer) {
         this.customer = customer;
     }
 
     /**
      * 
      * @return
-     *     returns MerchantDomain
+     *     returns MerchantElement
      */
-    public domain.MerchantDomain getMerchant() {
+    public webservice.elements.MerchantElement getMerchant() {
         return this.merchant;
     }
 
@@ -55,16 +55,16 @@ public class NewSaleAndUpdateStore {
      * @param merchant
      *     the value for the merchant property
      */
-    public void setMerchant(domain.MerchantDomain merchant) {
+    public void setMerchant(webservice.elements.MerchantElement merchant) {
         this.merchant = merchant;
     }
 
     /**
      * 
      * @return
-     *     returns CarDomain
+     *     returns CarElement
      */
-    public domain.CarDomain getCar() {
+    public webservice.elements.CarElement getCar() {
         return this.car;
     }
 
@@ -73,7 +73,7 @@ public class NewSaleAndUpdateStore {
      * @param car
      *     the value for the car property
      */
-    public void setCar(domain.CarDomain car) {
+    public void setCar(webservice.elements.CarElement car) {
         this.car = car;
     }
 

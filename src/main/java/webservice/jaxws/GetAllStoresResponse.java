@@ -8,20 +8,20 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "getCarByMarkAndModelResponse", namespace = "http://webservice/")
+@XmlRootElement(name = "getAllStoresResponse", namespace = "http://webservice/")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getCarByMarkAndModelResponse", namespace = "http://webservice/")
-public class GetCarByMarkAndModelResponse {
+@XmlType(name = "getAllStoresResponse", namespace = "http://webservice/")
+public class GetAllStoresResponse {
 
     @XmlElement(name = "return", namespace = "")
-    private List<webservice.elements.CarElement> _return;
+    private List<webservice.elements.StoreElement> _return;
 
     /**
      * 
      * @return
-     *     returns List<CarElement>
+     *     returns List<StoreElement>
      */
-    public List<webservice.elements.CarElement> getReturn() {
+    public List<webservice.elements.StoreElement> getReturn() {
         return this._return;
     }
 
@@ -30,7 +30,7 @@ public class GetCarByMarkAndModelResponse {
      * @param _return
      *     the value for the _return property
      */
-    public void setReturn(List<webservice.elements.CarElement> _return) {
+    public void setReturn(List<webservice.elements.StoreElement> _return) {
         this._return = _return;
     }
 
