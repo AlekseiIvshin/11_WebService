@@ -6,8 +6,8 @@ import mapper.Mapper;
 import dao.car.modification.Modification;
 import dao.store.Store;
 import dao.store.StoreDAOImpl;
-import domain.car.CarDomain;
-import domain.store.StoreDomain;
+import domain.CarDomain;
+import domain.StoreDomain;
 
 /**
  * Store service implementation.
@@ -24,7 +24,7 @@ public class StoreServiceImpl extends
 	 */
 	public StoreServiceImpl() {
 		super();
-		dao = new StoreDAOImpl(entityManager);
+		dao = new StoreDAOImpl(entityManagerFactory);
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package dao.merchant;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import dao.GenericDAOImpl;
 
@@ -17,8 +18,8 @@ public class MerchantDAOImpl
 	 * Constructor.
 	 * @param entityManager entiry manager
 	 */
-	public MerchantDAOImpl(final EntityManager entityManager) {
-		super(entityManager);
+	public MerchantDAOImpl(final EntityManagerFactory entityManagerFactory) {
+		super(entityManagerFactory);
 	}
 
 }

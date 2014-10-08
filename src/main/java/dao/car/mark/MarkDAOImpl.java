@@ -3,7 +3,7 @@ package dao.car.mark;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -34,8 +34,8 @@ public class MarkDAOImpl extends GenericDAOImpl<Mark, Integer> implements
 	 * @param entityManager
 	 *            entity manager
 	 */
-	public MarkDAOImpl(final EntityManager entityManager) {
-		super(entityManager);
+	public MarkDAOImpl(final EntityManagerFactory entityManagerFactory) {
+		super(entityManagerFactory);
 	}
 
 	/**
@@ -46,12 +46,22 @@ public class MarkDAOImpl extends GenericDAOImpl<Mark, Integer> implements
 	 * @return founded marks
 	 */
 	public final List<Mark> findAny(final String name) {
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Mark> query = builder.createQuery(Mark.class);
 		Root<Mark> root = query.from(Mark.class);
 		query.where(builder.like(root.get(Mark_.name), name)).select(root);
-		TypedQuery<Mark> ctq = entityManager.createQuery(query);
-		return ctq.getResultList();
+		List<Mark> result = null;
+		try {
+			TypedQuery<Mark> ctq = entityManager.createQuery(query);
+			result = ctq.getResultList();
+		} catch (Exception e) {
+			LOG.error("Find any mark", e);
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 	/**
@@ -62,16 +72,23 @@ public class MarkDAOImpl extends GenericDAOImpl<Mark, Integer> implements
 	 * @return founded mark or null (if not found)
 	 */
 	public final Mark findOne(final String name) {
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Mark> query = builder.createQuery(Mark.class);
 		Root<Mark> root = query.from(Mark.class);
 		query.where(builder.equal(root.get(Mark_.name), name));
-		TypedQuery<Mark> ctq = entityManager.createQuery(query);
+
+		Mark result = null;
 		try {
-			return ctq.getSingleResult();
-		} catch (NoResultException e) {
-			return null;
+			TypedQuery<Mark> ctq = entityManager.createQuery(query);
+			result = ctq.getSingleResult();
+		} catch (Exception e) {
+			LOG.error("Find any mark", e);
+		} finally {
+			entityManager.close();
 		}
+		return result;
 	}
 
 	/**
@@ -88,6 +105,20 @@ public class MarkDAOImpl extends GenericDAOImpl<Mark, Integer> implements
 			markData = create(markData);
 		}
 		return markData;
+	}
+
+	@Override
+	public List<String> findAllNames() {
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		List<String> result = null;
+		try {
+			result = entityManager.createQuery(
+					"SELECT mark.name FROM Mark mark").getResultList();
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 }

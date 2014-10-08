@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import dao.car.model.Model;
+import dao.car.model.CarModel;
 
 /**
  * Entity of table 'modification'.
@@ -44,7 +44,7 @@ public class Modification {
 	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_car_model")
-	private Model model;
+	private CarModel model;
 
 	/**
 	 * Default constructor.
@@ -68,11 +68,11 @@ public class Modification {
 		this.name = name;
 	}
 
-	public Model getModel() {
+	public CarModel getModel() {
 		return model;
 	}
 
-	public void setModel(Model model) {
+	public void setModel(CarModel model) {
 		this.model = model;
 	}
 

@@ -3,7 +3,7 @@ package service.merchant;
 import service.DomainServiceImpl;
 import dao.merchant.Merchant;
 import dao.merchant.MerchantDAOImpl;
-import domain.merchant.MerchantDomain;
+import domain.MerchantDomain;
 
 /**
  * Merchant service implementation.
@@ -22,7 +22,7 @@ public class MerchantServiceImpl
 	 */
 	public MerchantServiceImpl() {
 		super();
-		dao = new MerchantDAOImpl(entityManager);
+		dao = new MerchantDAOImpl(entityManagerFactory);
 	}
 
 }

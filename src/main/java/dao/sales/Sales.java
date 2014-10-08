@@ -61,7 +61,7 @@ public class Sales {
 	/**
 	 * Sale customer.
 	 */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "id_customer")
 	private Customer customer;
 

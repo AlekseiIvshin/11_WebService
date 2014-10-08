@@ -2,22 +2,28 @@ package mapper;
 
 import java.util.List;
 
+import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import webservice.elements.CarElement;
+import webservice.elements.CustomerElement;
+import webservice.elements.MerchantElement;
+import webservice.elements.SalesElement;
+import webservice.elements.StoreElement;
 import dao.car.modification.Modification;
 import dao.customer.Customer;
 import dao.merchant.Merchant;
 import dao.sales.Sales;
 import dao.store.Store;
-import domain.car.CarDomainImpl;
-import domain.customer.CustomerDomainImpl;
-import domain.merchant.MerchantDomainImpl;
-import domain.sales.SalesDomainImpl;
-import domain.store.StoreDomainImpl;
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
+import domain.CarDomain;
+import domain.CustomerDomain;
+import domain.MerchantDomain;
+import domain.SalesDomain;
+import domain.StoreDomain;
 
 /**
  * Main mapper for application.
@@ -50,7 +56,7 @@ public class MainMapper implements Mapper {
 	 */
 	private void initMap() {
 		// Customer Domain to Customer Entity
-		mapperFactory.classMap(CustomerDomainImpl.class, Customer.class)
+		mapperFactory.classMap(CustomerDomain.class, Customer.class)
 				.constructorA("id").field("name", "name")
 				.field("surname", "surname").field("patronymic", "patronymic")
 				.field("passportSeries", "passportSeries")
@@ -58,30 +64,50 @@ public class MainMapper implements Mapper {
 				.field("birthDate", "birthDate").field("id", "id").register();
 
 		// Merchant domain to Merchant entity
-		mapperFactory.classMap(MerchantDomainImpl.class, Merchant.class)
+		mapperFactory.classMap(MerchantDomain.class, Merchant.class)
 				.constructorA("id").field("name", "name")
 				.field("surname", "surname").field("patronymic", "patronymic")
 				.field("id", "id").register();
 
 		// Car domain to Car Modification entity
-		mapperFactory.classMap(CarDomainImpl.class, Modification.class)
+		mapperFactory.classMap(CarDomain.class, Modification.class)
 				.constructorA("id").field("id", "id")
 				.field("mark", "model.mark.name").field("model", "model.name")
 				.field("modification", "name").register();
 
 		// Store domain to Store entity
-		mapperFactory.classMap(StoreDomainImpl.class, Store.class)
+		mapperFactory.classMap(StoreDomain.class, Store.class)
 				.field("id", "id").field("quantity", "count")
 				.field("price", "price")
 				.field("enableTestDrive", "testDriveAvaible")
 				.field("car", "modification").register();
 
 		// Sales domain to sales entity
-		mapperFactory.classMap(SalesDomainImpl.class, Sales.class)
+		mapperFactory.classMap(SalesDomain.class, Sales.class)
 				.field("id", "id").field("customer", "customer")
 				.field("merchant", "merchant").field("saleDate", "saleDate")
 				.field("price", "price").field("car", "modification")
 				.register();
+
+		// Customer Domain to Customer Element
+		mapperFactory.classMap(CustomerDomain.class, CustomerElement.class)
+				.byDefault().register();
+
+		// Merchant domain to Merchant Element
+		mapperFactory.classMap(MerchantDomain.class, MerchantElement.class)
+				.byDefault().register();
+
+		// Car domain to Car Modification Element
+		mapperFactory.classMap(CarDomain.class, CarElement.class).byDefault()
+				.register();
+
+		// Store domain to Store Element
+		mapperFactory.classMap(StoreDomain.class, StoreElement.class)
+				.byDefault().register();
+
+		// Sales domain to sales Element
+		mapperFactory.classMap(SalesDomain.class, SalesElement.class)
+				.byDefault().register();
 
 	}
 
@@ -118,8 +144,7 @@ public class MainMapper implements Mapper {
 	 * @return list of mapped objects
 	 */
 	public final <FromClass, ToClass> List<ToClass> mapAsList(
-			final List<FromClass> object,
-			final Class<ToClass> toClass) {
+			final List<FromClass> object, final Class<ToClass> toClass) {
 		MapperFacade mapperFacade = mapperFactory.getMapperFacade();
 		return mapperFacade.mapAsList(object, toClass);
 	}

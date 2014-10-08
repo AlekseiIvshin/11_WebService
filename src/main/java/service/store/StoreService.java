@@ -1,8 +1,8 @@
 package service.store;
 
 import service.DomainService;
-import domain.car.CarDomain;
-import domain.store.StoreDomain;
+import domain.CarDomain;
+import domain.StoreDomain;
 
 /**
  * Store service interface.

@@ -1,9 +1,10 @@
 package service.car;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import service.DomainService;
-import domain.car.CarDomain;
+import domain.CarDomain;
 
 /**
  * Car service interface.
@@ -20,16 +21,18 @@ public interface CarService extends DomainService<CarDomain, Long> {
 	 * @param modification car modification
 	 * @return created car
 	 * @throws SQLException 
+	 * @throws Exception 
 	 */
-	CarDomain addCar(String mark, String model, String modification) throws SQLException;
+	CarDomain addCar(String mark, String model, String modification) throws  Exception;
 
 	/**
 	 * Remove car.
 	 * @param mark mark name
 	 * @param model model name
 	 * @param modification car modification
+	 * @throws Exception 
 	 */
-	void removeCar(String mark, String model, String modification);
+	void removeCar(String mark, String model, String modification) throws Exception;
 
 	/**
 	 * Find car by name.
@@ -37,7 +40,11 @@ public interface CarService extends DomainService<CarDomain, Long> {
 	 * @param model model name
 	 * @param modification modification
 	 * @return founded car
+	 * @throws Exception 
 	 */
-	CarDomain findOne(String mark, String model, String modification);
+	CarDomain findOne(String mark, String model, String modification) throws Exception;
 
+	List<String> getMarks();
+	
+	List<CarDomain> findByMarkAndModel(String markName, String modelName);
 }

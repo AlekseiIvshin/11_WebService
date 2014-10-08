@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +19,12 @@ import org.slf4j.LoggerFactory;
  * @param <IdType>
  *            entity id
  */
-public class GenericDAOImpl<Model, IdType> 
-		implements GenericDAO<Model, IdType> {
+public class GenericDAOImpl<Model, IdType> implements GenericDAO<Model, IdType> {
 
 	/**
 	 * Entity manager.
 	 */
-	protected EntityManager entityManager;
+	protected EntityManagerFactory entityManagerFactory;
 
 	/**
 	 * Type of entity.
@@ -43,10 +43,10 @@ public class GenericDAOImpl<Model, IdType>
 	 *            entity manager
 	 */
 	@SuppressWarnings("unchecked")
-	public GenericDAOImpl(final EntityManager entityManager) {
+	public GenericDAOImpl(final EntityManagerFactory entityManagerFactory) {
 		this.entityType = (Class<Model>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
-		this.entityManager = entityManager;
+		this.entityManagerFactory = entityManagerFactory;
 	}
 
 	/**
@@ -57,8 +57,18 @@ public class GenericDAOImpl<Model, IdType>
 	 * @return persisted entity
 	 */
 	public final Model create(final Model entity) {
-		entityManager.persist(entity);
-		entityManager.flush();
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+			entityManager.persist(entity);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			LOG.error("Create entity error",e);
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
+		}
 		return entity;
 	}
 
@@ -70,7 +80,20 @@ public class GenericDAOImpl<Model, IdType>
 	 * @return merged entity
 	 */
 	public final Model update(final Model entity) {
-		return entityManager.merge(entity);
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		Model result = null;
+		try {
+			entityManager.getTransaction().begin();
+			result = entityManager.merge(entity);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			LOG.error("Update entity error",e);
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 	/**
@@ -81,7 +104,15 @@ public class GenericDAOImpl<Model, IdType>
 	 * @return founded entity
 	 */
 	public final Model find(final IdType id) {
-		return entityManager.find(entityType, id);
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		Model result = null;
+		try {
+			result = entityManager.find(entityType, id);
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 	/**
@@ -91,9 +122,17 @@ public class GenericDAOImpl<Model, IdType>
 	 */
 	@SuppressWarnings("unchecked")
 	public final List<Model> findAll() {
-		return entityManager.createQuery(
-				"SELECT entity FROM " + entityType.getName() + " entity")
-				.getResultList();
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		List<Model> result = null;
+		try {
+			result = entityManager.createQuery(
+					"SELECT entity FROM " + entityType.getName() + " entity")
+					.getResultList();
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 	/**
@@ -103,8 +142,19 @@ public class GenericDAOImpl<Model, IdType>
 	 *            id of entity
 	 */
 	public final void deleteById(final IdType id) {
-		Model m = find(id);
-		entityManager.remove(m);
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+			Model m = entityManager.find(entityType, id);
+			entityManager.remove(m);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			LOG.error("Delete entity error",e);
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
+		}
 	}
 
 	/**
@@ -118,11 +168,19 @@ public class GenericDAOImpl<Model, IdType>
 	 */
 	@SuppressWarnings("unchecked")
 	public final List<Model> find(final int offset, final int limit) {
-		return entityManager
-				.createQuery(
-						"SELECT entity FROM " + entityType.getName()
-								+ " entity").setFirstResult(offset)
-				.setMaxResults(limit).getResultList();
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		List<Model> result = null;
+		try {
+			result = entityManager
+					.createQuery(
+							"SELECT entity FROM " + entityType.getName()
+									+ " entity").setFirstResult(offset)
+					.setMaxResults(limit).getResultList();
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 	/**
@@ -132,7 +190,18 @@ public class GenericDAOImpl<Model, IdType>
 	 *            entity
 	 */
 	public final void delete(final Model entity) {
-		entityManager.remove(entity);
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+			entityManager.remove(entity);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			LOG.error("Delete entity error",e);
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
+		}
 	}
 
 }

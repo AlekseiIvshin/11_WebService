@@ -1,7 +1,7 @@
 package service.merchant;
 
 import service.DomainService;
-import domain.merchant.MerchantDomain;
+import domain.MerchantDomain;
 
 /**
  * Merchant service interface.

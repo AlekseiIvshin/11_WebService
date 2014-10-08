@@ -1,7 +1,7 @@
 package service.customer;
 
 import service.DomainService;
-import domain.customer.CustomerDomain;
+import domain.CustomerDomain;
 
 /**
  * Customer service interface.
@@ -20,4 +20,6 @@ public interface CustomerService
 	 * @return founded customer
 	 */
 	CustomerDomain findByPassport(CustomerDomain customer);
+
+	CustomerDomain findByPassport(String series, String number);
 }

@@ -1,6 +1,7 @@
 package dao.customer;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -30,8 +31,8 @@ public class CustomerDAOImpl extends GenericDAOImpl<Customer, Integer>
 	 * 
 	 * @param entityManager
 	 */
-	public CustomerDAOImpl(final EntityManager entityManager) {
-		super(entityManager);
+	public CustomerDAOImpl(final EntityManagerFactory entityManagerFactory) {
+		super(entityManagerFactory);
 	}
 
 	/**
@@ -42,6 +43,9 @@ public class CustomerDAOImpl extends GenericDAOImpl<Customer, Integer>
 	 * @return founded customer
 	 */
 	public final Customer findByPassport(final Customer customer) {
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
 		Root<Customer> resultCustomer = query.from(Customer.class);
@@ -51,8 +55,38 @@ public class CustomerDAOImpl extends GenericDAOImpl<Customer, Integer>
 				.where(builder.equal(
 						resultCustomer.get(Customer_.passportNumber),
 						customer.getPassportNumber())).select(resultCustomer);
-		TypedQuery<Customer> ctq = entityManager.createQuery(query);
-		return ctq.getSingleResult();
+		Customer result = null;
+		try {
+			TypedQuery<Customer> ctq = entityManager.createQuery(query);
+			result = ctq.getSingleResult();
+		} finally {
+			entityManager.close();
+		}
+		return result;
+	}
+
+	public final Customer findByPassport(final String series,
+			final String number) {
+		EntityManager entityManager = entityManagerFactory
+				.createEntityManager();
+
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
+		Root<Customer> resultCustomer = query.from(Customer.class);
+		query.where(
+				builder.equal(resultCustomer.get(Customer_.passportSeries),
+						series))
+				.where(builder.equal(
+						resultCustomer.get(Customer_.passportNumber), number))
+				.select(resultCustomer);
+		Customer result = null;
+		try {
+			TypedQuery<Customer> ctq = entityManager.createQuery(query);
+			result = ctq.getSingleResult();
+		} finally {
+			entityManager.close();
+		}
+		return result;
 	}
 
 }

@@ -5,13 +5,15 @@ import mapper.Mapper;
 import service.DomainServiceImpl;
 import dao.car.modification.Modification;
 import dao.customer.Customer;
+import dao.customer.CustomerDAO;
+import dao.customer.CustomerDAOImpl;
 import dao.merchant.Merchant;
 import dao.sales.Sales;
 import dao.sales.SalesDAOImpl;
-import domain.car.CarDomain;
-import domain.customer.CustomerDomain;
-import domain.merchant.MerchantDomain;
-import domain.sales.SalesDomain;
+import domain.CarDomain;
+import domain.CustomerDomain;
+import domain.MerchantDomain;
+import domain.SalesDomain;
 
 /**
  * Sales service implementation.
@@ -28,7 +30,7 @@ public class SalesServiceImpl extends
 	 */
 	public SalesServiceImpl() {
 		super();
-		dao = new SalesDAOImpl(entityManager);
+		dao = new SalesDAOImpl(entityManagerFactory);
 	}
 
 	/**
@@ -67,7 +69,14 @@ public class SalesServiceImpl extends
 		Merchant merch = mapper.map(merchant, Merchant.class);
 		Modification modif = mapper.map(car, Modification.class);
 
-		Sales changedSales = dao.newSaleAndUpdateStore(cust, merch, modif);
+		CustomerDAO customerDAO = new CustomerDAOImpl(entityManagerFactory);
+
+		Customer persisted = customerDAO.findByPassport(cust);
+		if(persisted==null){
+			persisted = customerDAO.create(cust);
+		}
+		
+		Sales changedSales = dao.newSaleAndUpdateStore(persisted, merch, modif);
 		return mapper.map(changedSales, SalesDomain.class);
 	}
 
