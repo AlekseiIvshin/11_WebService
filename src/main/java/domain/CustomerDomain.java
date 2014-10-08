@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Customer domain implementation.
@@ -38,6 +39,7 @@ public class CustomerDomain{
 	 * Customer birth date.
 	 */
 	private Date birthDate;
+	
 
 	/**
 	 * Default constructor.

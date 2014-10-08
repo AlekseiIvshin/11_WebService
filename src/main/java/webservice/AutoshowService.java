@@ -87,4 +87,14 @@ public class AutoshowService implements ShowService {
 	public List<String> getCarMarkList() {
 		return carService.getMarks();
 	}
+
+	@Override
+	public List<SalesDomain> getAllSales() {
+		return salesService.getAll();
+	}
+
+	@Override
+	public List<StoreDomain> getAllStores() {
+		return storeService.getAll();
+	}
 }

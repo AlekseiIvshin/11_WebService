@@ -172,5 +172,11 @@ public interface ShowService {
 	 */
 	@WebMethod
 	public List<MerchantDomain> getAllMerchants();
+	
+	@WebMethod
+	public List<SalesDomain> getAllSales();
+	
+	@WebMethod
+	public List<StoreDomain> getAllStores();
 
 }

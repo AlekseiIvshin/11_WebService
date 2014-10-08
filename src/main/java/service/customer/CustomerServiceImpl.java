@@ -7,6 +7,7 @@ import javax.jws.WebService;
 import mapper.MainMapper;
 import mapper.Mapper;
 import service.DomainServiceImpl;
+import service.sales.SalesServiceImpl;
 import dao.customer.Customer;
 import dao.customer.CustomerDAOImpl;
 import domain.CustomerDomain;
@@ -17,7 +18,6 @@ import domain.CustomerDomain;
  * @author Aleksei_Ivshin
  *
  */
-@WebService
 public class CustomerServiceImpl
 		extends
 		DomainServiceImpl<CustomerDomain, Integer, Customer, Integer, CustomerDAOImpl>
@@ -45,12 +45,9 @@ public class CustomerServiceImpl
 				.map(dao.findByPassport(customerDao), CustomerDomain.class);
 	}
 
-	@WebMethod
-	public CustomerDomain findByPassport(
-			@WebParam(name = "series") String series,
-			@WebParam(name = "number") String number) {
-		return (CustomerDomain) mapper.map(
-				dao.findByPassport(series, number), CustomerDomain.class);
+	public CustomerDomain findByPassport(String series, String number) {
+		return mapper
+				.map(dao.findByPassport(series,number), CustomerDomain.class);
 	}
 
 }

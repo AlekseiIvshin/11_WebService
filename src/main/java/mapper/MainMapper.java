@@ -119,8 +119,7 @@ public class MainMapper implements Mapper {
 	 * @return list of mapped objects
 	 */
 	public final <FromClass, ToClass> List<ToClass> mapAsList(
-			final List<FromClass> object,
-			final Class<ToClass> toClass) {
+			final List<FromClass> object, final Class<ToClass> toClass) {
 		MapperFacade mapperFacade = mapperFactory.getMapperFacade();
 		return mapperFacade.mapAsList(object, toClass);
 	}
