@@ -1,13 +1,8 @@
 package service.customer;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
-
 import mapper.MainMapper;
 import mapper.Mapper;
 import service.DomainServiceImpl;
-import service.sales.SalesServiceImpl;
 import dao.customer.Customer;
 import dao.customer.CustomerDAOImpl;
 import domain.CustomerDomain;

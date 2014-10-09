@@ -111,10 +111,13 @@ public class MarkDAOImpl extends GenericDAOImpl<Mark, Integer> implements
 	public List<String> findAllNames() {
 		EntityManager entityManager = entityManagerFactory
 				.createEntityManager();
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<String> query = builder.createQuery(String.class);
+		Root<Mark> root = query.from(Mark.class);
+		query.multiselect(root.get(Mark_.name));
 		List<String> result = null;
 		try {
-			result = entityManager.createQuery(
-					"SELECT mark.name FROM Mark mark").getResultList();
+			result = entityManager.createQuery(query).getResultList();
 		} finally {
 			entityManager.close();
 		}

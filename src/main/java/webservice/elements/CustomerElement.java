@@ -1,7 +1,6 @@
 package webservice.elements;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Customer domain implementation.

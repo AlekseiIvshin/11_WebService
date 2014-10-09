@@ -9,11 +9,9 @@ import javax.persistence.NoResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import service.DomainServiceImpl;
 import dao.GenericDAOImpl;
 import dao.car.modification.Modification;
 import dao.customer.Customer;
-import dao.customer.CustomerDAOImpl;
 import dao.merchant.Merchant;
 import dao.store.Store;
 import dao.store.StoreDAOImpl;

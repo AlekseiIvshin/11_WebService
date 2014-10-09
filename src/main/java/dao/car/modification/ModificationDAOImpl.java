@@ -7,13 +7,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import dao.GenericDAOImpl;
+import dao.car.mark.Mark;
+import dao.car.mark.Mark_;
 import dao.car.model.CarModel;
+import dao.car.model.CarModel_;
 
 /**
  * Modification DAO implementation.
@@ -108,13 +111,18 @@ public class ModificationDAOImpl extends GenericDAOImpl<Modification, Long>
 		EntityManager entityManager = entityManagerFactory
 				.createEntityManager();
 
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Modification> query = builder
+				.createQuery(Modification.class);
+
+		Root<Modification> root = query.from(Modification.class);
+		Join<Modification, CarModel> models = root.join(Modification_.model);
+		Join<CarModel, Mark> marks = models.join(CarModel_.mark);
+		query.where(builder.equal(marks.get(Mark_.name), markName))
+				.select(root);
 		List<Modification> result = null;
 		try {
-			result = entityManager
-					.createQuery(
-							"SELECT modif FROM Modification modif, CarModel model, Mark mark "
-									+ "WHERE mark.name=:markName AND model.mark=mark AND modif.model=model")
-					.setParameter("markName", markName).getResultList();
+			result = entityManager.createQuery(query).getResultList();
 		} finally {
 			entityManager.close();
 		}
@@ -125,16 +133,23 @@ public class ModificationDAOImpl extends GenericDAOImpl<Modification, Long>
 			String modelName) {
 		EntityManager entityManager = entityManagerFactory
 				.createEntityManager();
+
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Modification> query = builder
+				.createQuery(Modification.class);
+
+		Root<Modification> root = query.from(Modification.class);
+		Join<Modification, CarModel> models = root.join(Modification_.model);
+		Join<CarModel, Mark> marks = models.join(CarModel_.mark);
+		query.where(
+				builder.and(builder.equal(marks.get(Mark_.name), markName),
+						builder.equal(models.get(CarModel_.name), modelName)))
+				.select(root);
+
 		List<Modification> result = null;
-		try {
-			result = entityManager
-					.createQuery(
-							"SELECT modif FROM Modification modif, CarModel model, Mark mark "
-									+ "WHERE mark.name=:markName AND model.mark=mark AND model.name=:modelName AND modif.model=model")
-					.setParameter("markName", markName)
-					.setParameter("modelName", modelName).getResultList();
-		} finally {
-			entityManager.close();
+		try{
+			result = entityManager.createQuery(query).getResultList();
+		} finally{entityManager.close();
 		}
 		return result;
 	}

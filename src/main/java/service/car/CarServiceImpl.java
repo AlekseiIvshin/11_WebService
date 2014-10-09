@@ -3,14 +3,13 @@ package service.car;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.NoResultException;
+import mapper.MainMapper;
+import mapper.Mapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import service.DomainServiceImpl;
-import mapper.MainMapper;
-import mapper.Mapper;
 import dao.car.mark.Mark;
 import dao.car.mark.MarkDAO;
 import dao.car.mark.MarkDAOImpl;
